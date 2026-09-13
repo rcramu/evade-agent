@@ -1,6 +1,6 @@
 # EVADE-AGENT laboratory
 
-Repository: https://github.com/rchencha-cs/evade-agent
+Repository: https://github.com/rcramu/evade-agent
 
 
 In-process runtime-assurance engine for the JSS manuscript
@@ -29,7 +29,7 @@ python3 -m venv .venv
 Dataset: `evaluation/results/approach_comparison.json` (`schema: evadeagent-eval-v3`, 616 unique templates, 7 agents, 4 plan paraphrases, `repeats=200` latency variants, `base_seed=20260911`).
 Details: `docs/eval.md`.
 
-A later kernel campaign is specified in [`docs/kernel-lab.md`](docs/kernel-lab.md) and [`kernel-lab/GOAL.md`](kernel-lab/GOAL.md). `evaluation/run_kernel_pilot.py` writes `evaluation/results/kernel_pilot.json` (`schema: evadeagent-eval-v4-pilot`). Falco 0.44.1 captured M1; Tetragon was not run; `products_executed` stays false. That file must not overwrite the v3 JSON and must not be copied into Section 8.
+A later kernel campaign is specified in [`docs/kernel-lab.md`](docs/kernel-lab.md) and [`kernel-lab/GOAL.md`](kernel-lab/GOAL.md). `evaluation/run_kernel_pilot.py` writes `evaluation/results/kernel_pilot.json` (`schema: evadeagent-eval-v4-pilot`). Falco 0.44.1 captured M1; Tetragon 1.7.0 captured L1/A6; `products_executed` is true. That file must not overwrite the v3 JSON and must not be copied into Section 8.
 
 ## What is not in this repository
 

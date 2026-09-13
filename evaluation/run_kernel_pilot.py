@@ -22,6 +22,7 @@ DEFAULT_DUMP = _DUMP_ROOT / "bundled"
 EXECUTED_DUMP = _DUMP_ROOT / "executed"
 HYBRID_DUMP = _DUMP_ROOT / "hybrid"
 LIVE_M1 = _ROOT / "kernel-lab" / "dumps" / "live-m1" / "falco.jsonl"
+LIVE_TG = _ROOT / "kernel-lab" / "dumps" / "live-tetragon" / "tetragon.jsonl"
 
 
 def main() -> int:
@@ -50,7 +51,7 @@ def main() -> int:
     elif args.executed:
         dump_dir = EXECUTED_DUMP
     elif LIVE_M1.is_file():
-        dump_dir = write_hybrid_dumps(HYBRID_DUMP, LIVE_M1)
+        dump_dir = write_hybrid_dumps(HYBRID_DUMP, LIVE_M1, LIVE_TG if LIVE_TG.is_file() else None)
     else:
         dump_dir = EXECUTED_DUMP
     payload = run_pilot(dump_dir)
@@ -60,7 +61,8 @@ def main() -> int:
     print(
         f"wrote {out} schema={payload['schema']} "
         f"products_executed={payload['products_executed']} "
-        f"falco_executed={payload.get('falco_executed')}"
+        f"falco_executed={payload.get('falco_executed')} "
+        f"tetragon_executed={payload.get('tetragon_executed')}"
     )
     print(f"source={payload['source']}")
     if payload["mismatches"]:

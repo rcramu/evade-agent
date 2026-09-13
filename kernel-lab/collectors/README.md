@@ -11,5 +11,11 @@ Parsers live in `src/evadeagent/kernel_lab/shapes.py` and
 
 Lab-only fields stay under `_lab` (`seen`, `flags`, `ancestry0`, `endpoint`).
 
-This directory is the place for a later **live** adapter (read a product log
-file, write JSONL). It does not load BPF and does not open sockets.
+Live adapters:
+
+| Script | Product | Cells |
+|---|---|---|
+| `falco_m1_capture.sh` | Falco 0.44.1 (in `falcosecurity/falco`) | M1 |
+| `tetragon_capture.sh` | Tetragon 1.7.0 (`quay.io/cilium/tetragon`) | L1, A6 |
+
+Both run privileged Docker on the LinuxKit VM. They do not open sockets.

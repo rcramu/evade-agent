@@ -7,9 +7,17 @@ Path labels such as /lab/secrets/token are not secrets.
 
 from __future__ import annotations
 
+from pathlib import PurePosixPath
 from typing import Any, Iterable
 
 from evadeagent.observe import Layer, Observation
+
+
+def _basename(value: str | None) -> str | None:
+    if not value:
+        return None
+    name = PurePosixPath(str(value)).name
+    return name or str(value)
 
 
 def falco_alerts_to_observations(
@@ -107,8 +115,11 @@ def tetragon_events_to_observations(
         seen = bool(lab.get("seen", True))
         exec_ev = event.get("process_exec") or {}
         proc = exec_ev.get("process") or event.get("process") or {}
-        parent = (proc.get("parent") or {}).get("binary") or proc.get("parent_exec_id")
-        binary = proc.get("binary") or proc.get("name")
+        parent_obj = exec_ev.get("parent") if isinstance(exec_ev.get("parent"), dict) else {}
+        if not parent_obj and isinstance(proc.get("parent"), dict):
+            parent_obj = proc["parent"]
+        parent = _basename(str(parent_obj.get("binary") or ""))
+        binary = _basename(str(proc.get("binary") or proc.get("name") or ""))
         t = _tick(proc.get("start_time"), lab.get("t", 0))
         container = (proc.get("pod") or {}).get("name") or lab.get("container")
         if binary:
@@ -116,20 +127,29 @@ def tetragon_events_to_observations(
                 Observation(
                     layer=Layer.HOST,
                     kind="process",
-                    name=str(binary),
+                    name=binary,
                     t=t,
-                    parent=str(parent) if parent else None,
+                    parent=parent,
                     container=str(container) if container else None,
                     run_id=run_id,
                     seen=seen,
                 )
             )
-        if lab.get("ancestry0"):
+        ancestry0 = lab.get("ancestry0")
+        if ancestry0:
+            ancestry_name = _basename(str(ancestry0)) or str(ancestry0)
+        elif binary in {"document-assistant", "unrelated-init"}:
+            ancestry_name = binary
+        elif parent in {"document-assistant", "unrelated-init"}:
+            ancestry_name = parent
+        else:
+            ancestry_name = None
+        if ancestry_name:
             out.append(
                 Observation(
                     layer=Layer.HOST,
                     kind="ancestry",
-                    name=str(lab["ancestry0"]),
+                    name=ancestry_name,
                     t=t,
                     run_id=run_id,
                     seen=seen,

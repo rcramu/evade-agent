@@ -1,7 +1,6 @@
-"""Event-shape pilot for a later kernel campaign.
+"""Kernel-lab pilot: Observation adapter plus optional live Falco/Tetragon dumps.
 
-Parses Falco-like and Tetragon-like JSON *shapes*. Does not load BPF, open
-sockets, or execute Falco or Tetragon. See docs/kernel-lab.md.
+See docs/kernel-lab.md. Does not open sockets.
 """
 
 from evadeagent.kernel_lab.pilot import PILOT_CELLS, run_pilot

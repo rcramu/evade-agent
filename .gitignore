@@ -2,6 +2,8 @@
 kernel-lab/dumps/live-m1/falco.raw
 kernel-lab/dumps/live-m1/falco.stdout
 kernel-lab/dumps/live-m1/falco.stderr
+kernel-lab/dumps/live-tetragon/tetragon.raw
+kernel-lab/dumps/live-tetragon/tetra.err
 kernel-lab/dumps/hybrid/
 kernel-lab/dumps/executed/
 __pycache__/

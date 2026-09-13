@@ -15,4 +15,4 @@ Those two objects are deterministic. A later `docker compose` run will rewrite t
 
 Regenerate with `docker compose run --rm --build lab`.
 
-`kernel_pilot.json` is a separate pipeline (`schema: evadeagent-eval-v4-pilot`). It is not a Section 8 source. Falco 0.44.1 captured M1; Tetragon was not run; `products_executed` stays false.
+`kernel_pilot.json` is a separate pipeline (`schema: evadeagent-eval-v4-pilot`). It is not a Section 8 source. Falco 0.44.1 captured M1; Tetragon 1.7.0 captured L1/A6; `products_executed` is true.

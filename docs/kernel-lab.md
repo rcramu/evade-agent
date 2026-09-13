@@ -3,9 +3,10 @@
 This note is the layout and adapter contract for work the JSS manuscript does
 **not** claim: product Falco/Tetragon, a lab MCP path, and a later field SLO.
 
-The in-process **event-shape pilot** is implemented (`schema: evadeagent-eval-v4-pilot`).
-It does not load BPF and does not execute Falco or Tetragon.
-It is not part of `schema: evadeagent-eval-v3`. Do not copy its cells into Section 8.
+The **kernel-lab pilot** is implemented (`schema: evadeagent-eval-v4-pilot`).
+Falco 0.44.1 captured M1; Tetragon 1.7.0 captured L1/A6. A8/A9 host rows still
+use the executed recorder. It is not part of `schema: evadeagent-eval-v3`.
+Do not copy its cells into Section 8.
 
 LLM-generated plans are out of scope here.
 Cisco publication approval is not a gate for this paper.
@@ -15,7 +16,7 @@ Cisco publication approval is not a gate for this paper.
 | Campaign | Object of study | Schema | Status |
 |---|---|---|---|
 | Compose lab | In-process encodings | `evadeagent-eval-v3` (seed `20260911`) | Section 8 |
-| Event-shape / executed / Falco-M1 hybrid | Adapter + executed cells + Falco 0.44.1 on M1 | `evadeagent-eval-v4-pilot` | Achieved; Tetragon not run |
+| Event-shape / executed / Falco+Tetragon hybrid | Adapter + executed cells + Falco M1 + Tetragon L1/A6 | `evadeagent-eval-v4-pilot` | Achieved |
 | Product observers + lab MCP | Real probes on a Linux VM | `evadeagent-eval-v4` | Not run |
 | Field SLO | Internal platform | `evadeagent-eval-v5` | Not run |
 
@@ -28,7 +29,7 @@ C5 (`evadeagent.detectors.detect`) does not change.
 agent log + MCP audit + host probe
         │
         ▼
-  Falco-like / Tetragon-like records   (fixtures now; products later)
+  Falco / Tetragon JSONL               (live M1 + L1/A6; fixtures elsewhere)
         │
         ▼
   shapes.py → Observation
