@@ -1,12 +1,15 @@
 {
   "schema": "evadeagent-eval-v4-pilot",
   "adapter_schema": "evadeagent-eval-v4",
-  "generated_utc": "2026-09-13T23:36:02.385464+00:00",
+  "generated_utc": "2026-09-13T23:51:22.944910+00:00",
   "products_executed": true,
   "falco_executed": true,
   "tetragon_executed": true,
-  "source": "executed workloads; M1 Falco 0.44.1; L1/A6 Tetragon 1.7.0 process_exec",
-  "dump_dir": "/Users/rchencha/Box Sync/Courses/Python/Sessions/56 GenAI/41.research-papers/F.EVADE-AGENT/github-repo/kernel-lab/dumps/hybrid",
+  "mcp_executed": true,
+  "observer_executed": true,
+  "tls_version": "TLSv1.3",
+  "source": "executed workloads; M1 Falco 0.44.1; L1/A6 Tetragon 1.7.0 process_exec; Phase 2 TLS 1.3 MCP + container observer",
+  "dump_dir": "/Users/rchencha/Box Sync/Courses/Python/Sessions/56 GenAI/41.research-papers/F.EVADE-AGENT/github-repo/kernel-lab/dumps/phase2",
   "agent": "document-assistant",
   "cells": {
     "L1": {
@@ -143,7 +146,7 @@
     "release": "25.5.0",
     "machine": "arm64",
     "python": "3.14.7",
-    "cpu_seconds": 0.078787,
-    "peak_rss_mib": 22.484375
+    "cpu_seconds": 0.114675,
+    "peak_rss_mib": 29.515625
   }
 }

@@ -1,0 +1,3 @@
+{"container": {"id": "0ee7e6f22875", "name": "evade-phase2-agent-1", "service": "agent"}, "t": 0, "source": "docker-api"}
+{"container": {"id": "2acc14fdbddb", "name": "evade-phase2-observer-1", "service": "observer"}, "t": 0, "source": "docker-api"}
+{"container": {"id": "17dc4234bb63", "name": "evade-phase2-mcp-1", "service": "mcp"}, "t": 0, "source": "docker-api"}

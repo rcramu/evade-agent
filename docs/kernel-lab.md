@@ -17,8 +17,8 @@ Cisco publication approval is not a gate for this paper.
 |---|---|---|---|
 | Compose lab | In-process encodings | `evadeagent-eval-v3` (seed `20260911`) | Section 8 |
 | Event-shape / executed / Falco+Tetragon hybrid | Adapter + executed cells + Falco M1 + Tetragon L1/A6 | `evadeagent-eval-v4-pilot` | Achieved |
-| Product observers + lab MCP | Real probes on a Linux VM | `evadeagent-eval-v4` | Not run |
-| Field SLO | Internal platform | `evadeagent-eval-v5` | Not run |
+| Product observers + lab MCP | Falco/Tetragon + TLS 1.3 MCP + observer | `evadeagent-eval-v4-pilot` | Achieved (Phase 1+2) |
+| Field SLO | Internal platform | `evadeagent-eval-v5` | Not run (`lab_slo.json` is lab-only) |
 
 `docker-compose.yml` stays offline, non-root, `cap_drop: ALL`, `network_mode: none`.
 Do not add BPF capabilities to that file.
@@ -105,13 +105,15 @@ A product run replaces fixture JSON with collector output, sets
 
 ## Phase 2 — lab MCP + container (same host)
 
-Internal network only. TLS 1.3. Tokens from the environment. Privileges only on
-the observer service under `kernel-lab/compose/` (not created yet).
+Implemented. Internal compose network. TLS 1.3. Token from `EVADE_MCP_TOKEN`.
+Privileges only on `kernel-lab/compose` `observer`. In-process TLS is the
+default dump join (`run_kernel_pilot.py --phase2`).
 
 ## Phase 3 — field SLO
 
 Different paper or *In Practice*. Calendar-time operational metrics. No customer
-data in the artifact.
+data in the artifact. `evaluation/run_lab_slo.py` writes lab-side metrics with
+`field_executed: false`.
 
 ## What this repository will not contain
 

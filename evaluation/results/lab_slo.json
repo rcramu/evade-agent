@@ -1,0 +1,19 @@
+{
+  "schema": "evadeagent-eval-v5-lab",
+  "generated_utc": "2026-09-13T23:51:23.063773+00:00",
+  "field_executed": false,
+  "source": "kernel_pilot operational metrics",
+  "note": "Field SLO needs a production platform and is not claimed. These numbers are lab-side: five-cell detect + capture completeness.",
+  "lab": {
+    "cells": 5,
+    "capture_complete": 4,
+    "capture_complete_rate": 0.8,
+    "cpu_seconds": 0.114675,
+    "peak_rss_mib": 29.515625,
+    "products_executed": true,
+    "mcp_executed": true,
+    "observer_executed": true,
+    "tls_version": "TLSv1.3",
+    "mismatches": []
+  }
+}

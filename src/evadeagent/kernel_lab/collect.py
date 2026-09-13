@@ -55,8 +55,20 @@ def load_cell_dir(cell_dir: Path, run_id: str) -> list[Observation]:
     falco = load_jsonl(cell_dir / "falco.jsonl")
     tetra = load_jsonl(cell_dir / "tetragon.jsonl")
     mcp = load_jsonl(cell_dir / "mcp.jsonl")
-    return (
+    events = (
         falco_alerts_to_observations(falco, run_id=run_id)
         + tetragon_events_to_observations(tetra, run_id=run_id)
         + mcp_audit_to_observations(mcp, run_id=run_id)
     )
+    observer = load_jsonl(cell_dir / "observer.jsonl")
+    container = ""
+    if observer:
+        container = str(((observer[0].get("container") or {}).get("id")) or "")
+    if container:
+        events = [
+            obs
+            if obs.container
+            else type(obs)(**{**obs.__dict__, "container": container})
+            for obs in events
+        ]
+    return events

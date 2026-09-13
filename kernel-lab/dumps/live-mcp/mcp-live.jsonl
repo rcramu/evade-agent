@@ -1,0 +1,11 @@
+{"uri":"mcp://documents/search","tool":"document.search","t":0,"tls":"TLSv1.3"}
+{"uri":"mcp://documents/read","tool":"document.read","t":1,"tls":"TLSv1.3"}
+{"uri":"mcp://documents/search","tool":"document.search","t":0,"tls":"TLSv1.3"}
+{"uri":"mcp://documents/read","tool":"document.read","t":1,"tls":"TLSv1.3"}
+{"uri":"mcp://documents/search","tool":"document.search","t":0,"tls":"TLSv1.3"}
+{"uri":"mcp://documents/read","tool":"document.read","t":1,"tls":"TLSv1.3"}
+{"uri":"mcp://documents/search","tool":"document.search","t":0,"tls":"TLSv1.3"}
+{"uri":"mcp://documents/read","tool":"document.read","t":1,"tls":"TLSv1.3"}
+{"uri":"mcp://documents/read","tool":"document.read","t":5,"tls":"TLSv1.3"}
+{"uri":"mcp://documents/search","tool":"document.search","t":0,"tls":"TLSv1.3"}
+{"uri":"mcp://documents/read","tool":"document.read","t":1,"tls":"TLSv1.3"}

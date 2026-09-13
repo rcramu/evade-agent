@@ -1,0 +1,99 @@
+# Phase 2 lab only. Privileges stay on observer.
+# Token: EVADE_MCP_TOKEN in the environment. Do not write it to a file.
+# Internal network: no published ports.
+
+name: evade-phase2
+
+services:
+  mcp:
+    image: python:3.12.11-slim-bookworm
+    working_dir: /app
+    environment:
+      PYTHONPATH: /app/src
+      EVADE_MCP_TOKEN: ${EVADE_MCP_TOKEN:?set EVADE_MCP_TOKEN in the environment}
+    volumes:
+      - ../..:/app:ro
+      - ./certs:/certs
+      - ../dumps/live-mcp:/out
+      - workspace:/lab
+    tmpfs:
+      - /tmp
+    command:
+      - python
+      - -m
+      - evadeagent.kernel_lab.mcp_tls
+      - serve
+      - --bind
+      - 0.0.0.0
+      - --port
+      - "8443"
+      - --cert-dir
+      - /certs
+      - --workspace
+      - /lab
+      - --audit
+      - /out/mcp-live.jsonl
+    networks:
+      - lab
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "python", "-c", "import pathlib; raise SystemExit(0 if pathlib.Path('/certs/cert.pem').is_file() else 1)"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+
+  agent:
+    image: python:3.12.11-slim-bookworm
+    working_dir: /app
+    depends_on:
+      mcp:
+        condition: service_healthy
+    environment:
+      PYTHONPATH: /app/src
+      EVADE_MCP_TOKEN: ${EVADE_MCP_TOKEN:?set EVADE_MCP_TOKEN in the environment}
+      EVADE_MCP_URL: https://mcp:8443
+      EVADE_MCP_CA: /certs/cert.pem
+    volumes:
+      - ../..:/app:ro
+      - ./certs:/certs:ro
+      - ../dumps/live-mcp:/out
+    tmpfs:
+      - /tmp
+    command:
+      - python
+      - evaluation/run_phase2_agent.py
+    networks:
+      - lab
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+  observer:
+    image: python:3.12.11-slim-bookworm
+    working_dir: /app
+    privileged: true
+    pid: host
+    environment:
+      PYTHONPATH: /app/src
+      EVADE_COMPOSE_PROJECT: evade-phase2
+      EVADE_OBSERVER_OUT: /out/observer.jsonl
+    volumes:
+      - ../..:/app:ro
+      - ../dumps/live-mcp:/out
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command:
+      - python
+      - evaluation/run_observer.py
+    networks:
+      - lab
+
+networks:
+  lab:
+    internal: true
+
+volumes:
+  workspace:
