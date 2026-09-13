@@ -1,0 +1,3 @@
+{"uri":"mcp://documents/search","tool":"document.search","t":0}
+{"uri":"mcp://documents/read","tool":"document.read","t":1}
+{"uri":"mcp://documents/read","tool":"document.read","t":5,"_lab":{"note":"MCP audit present; matching host events have seen=false"}}

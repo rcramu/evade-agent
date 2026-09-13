@@ -1,0 +1,15 @@
+# Laboratory Falco rules that encode manuscript Table C.1 only.
+# Not a default Falco pack. Not an exploit. Paths are lab labels.
+- rule: EVADE Lab Sensitive Path
+  desc: Laboratory sensitive-path class (/lab/secrets)
+  condition: (open_read or open_write) and (fd.name startswith /lab/secrets)
+  output: evade_path file=%fd.name proc=%proc.name evt_time=%evt.time
+  priority: WARNING
+  tags: [evade-lab]
+
+- rule: EVADE Lab Shell
+  desc: Laboratory process-spawn class (sh, bash)
+  condition: spawned_process and proc.name in (sh, bash)
+  output: evade_shell proc=%proc.name evt_time=%evt.time
+  priority: WARNING
+  tags: [evade-lab]

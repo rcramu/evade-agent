@@ -1,0 +1,2 @@
+{"process_exec":{"process":{"binary":"document-assistant","start_time":0}},"_lab":{"t":0,"ancestry0":"document-assistant"}}
+{"process_exec":{"process":{"binary":"document-reader","start_time":1,"parent":{"binary":"document-assistant"}}},"_lab":{"t":1}}

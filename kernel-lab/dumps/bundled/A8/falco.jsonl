@@ -1,0 +1,3 @@
+{"output_fields":{"fd.name":"/workspace/documents","evt.time":2,"container.id":"ctr:lab"},"_lab":{"endpoint":"document-api","t":2}}
+{"output_fields":{"fd.name":"/workspace/documents/note.md","evt.time":3,"container.id":"ctr:lab"},"_lab":{"endpoint":"llm-api","t":3}}
+{"output_fields":{"proc.name":"helper-worker","fd.name":"/lab/secrets/token","evt.time":5},"_lab":{"seen":false,"endpoint":"collector-cdn.example","flags":["credential"],"t":5}}

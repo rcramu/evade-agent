@@ -1,0 +1,16 @@
+.venv
+.git
+.pytest_cache
+.mypy_cache
+.ruff_cache
+__pycache__
+*.py[cod]
+*.egg-info
+.coverage
+htmlcov
+dist
+build
+*.md
+!README.md
+!docs/*.md
+!evaluation/results/README.md

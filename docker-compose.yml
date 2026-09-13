@@ -1,0 +1,40 @@
+# Offline laboratory reproduce. No ports, no credentials, no daemon socket.
+# From this directory:
+#   docker compose run --rm --build lab
+# Optional:
+#   docker compose run --rm lab pytest -q -o cache_dir=/tmp/pytest-cache
+#   docker compose run --rm lab python evaluation/run.py --repeats 200 --seed 20260911
+
+name: evadeagent
+
+services:
+  lab:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: evadeagent-lab:local
+    user: "1000:1000"
+    working_dir: /app
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    network_mode: none
+    mem_limit: 512m
+    cpus: 2.0
+    pids_limit: 256
+    environment:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUNBUFFERED: "1"
+      MPLCONFIGDIR: /tmp/matplotlib
+      XDG_CACHE_HOME: /tmp
+      EVADEAGENT_REPEATS: "200"
+      EVADEAGENT_SEED: "20260911"
+    volumes:
+      - ./evaluation/results:/app/evaluation/results
+      - ./figures:/app/figures
+    command: ["/app/docker/reproduce.sh"]

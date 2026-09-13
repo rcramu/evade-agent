@@ -1,0 +1,2 @@
+{"output_fields":{"fd.name":"/workspace/documents","evt.time":2,"container.id":"ctr:lab"},"_lab":{"endpoint":"document-api","t":2}}
+{"output_fields":{"fd.name":"/workspace/documents/notes","evt.time":1,"container.id":"ctr:lab"},"_lab":{"endpoint":"llm-api","t":1}}

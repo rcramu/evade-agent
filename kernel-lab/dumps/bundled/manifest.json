@@ -1,0 +1,13 @@
+{
+  "products_executed": false,
+  "agent": "document-assistant",
+  "cells": [
+    "L1",
+    "M1",
+    "A6",
+    "A8",
+    "A9"
+  ],
+  "source": "bundled Falco-like / Tetragon-like / MCP-audit fixtures",
+  "note": "Replace this directory with a live collector dump and set products_executed true only after Falco and Tetragon actually ran."
+}
