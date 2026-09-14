@@ -1,7 +1,8 @@
 """document-assistant five-cell pilot. Writes evadeagent-eval-v4-pilot JSON.
 
 Does not overwrite evaluation/results/approach_comparison.json.
-Products are not executed.
+Section 8 encodings stay in approach_comparison.json. Product joins are
+written to kernel_pilot.json / kernel_pilot_agents.json only.
 """
 
 from __future__ import annotations

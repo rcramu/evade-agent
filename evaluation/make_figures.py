@@ -165,7 +165,7 @@ def figure15(agents: dict) -> None:
     ax.set_xticklabels(PILOT_MODES)
     ax.set_yticks(range(len(labels)))
     ax.set_yticklabels(labels)
-    ax.set_title("Figure 15. Five-cell decisions after product join (three agents)")
+    ax.set_title("Figure 15. Five-cell decisions after product join (seven agents)")
     cbar = fig.colorbar(im, ax=ax, fraction=0.046, pad=0.08, ticks=[0, 1])
     cbar.ax.set_yticklabels(["ALLOW", "BLOCK"])
     cbar.set_label("Decision")
