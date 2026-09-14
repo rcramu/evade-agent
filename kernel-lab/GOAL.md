@@ -5,6 +5,7 @@ Cisco publication approval is not a gate. LLM-generated plans are out of scope.
 | Goal | Status | Evidence |
 |---|---|---|
 | Five-cell pipeline (L1, M1, A6, A8, A9) → C5 | **Achieved** | pytest + `kernel_pilot.json` |
+| coding-agent and devops-agent five cells | **Achieved** | `kernel_pilot_agents.json`; file-only MCP (no cluster) |
 | Decisions match encodings and EXPECTED | **Achieved** | `evaluation/results/kernel_pilot.json` |
 | Real workloads (files + `/bin/sh` child) | **Achieved** | `execute.py`, `dumps/executed/` |
 | In-process MCP audit join | **Achieved** | `mcp.jsonl`; A8 keeps MCP while host `seen=false` |

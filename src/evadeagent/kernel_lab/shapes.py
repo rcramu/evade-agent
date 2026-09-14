@@ -138,9 +138,19 @@ def tetragon_events_to_observations(
         ancestry0 = lab.get("ancestry0")
         if ancestry0:
             ancestry_name = _basename(str(ancestry0)) or str(ancestry0)
-        elif binary in {"document-assistant", "unrelated-init"}:
+        elif binary in {
+            "document-assistant",
+            "coding-agent",
+            "devops-agent",
+            "unrelated-init",
+        }:
             ancestry_name = binary
-        elif parent in {"document-assistant", "unrelated-init"}:
+        elif parent in {
+            "document-assistant",
+            "coding-agent",
+            "devops-agent",
+            "unrelated-init",
+        }:
             ancestry_name = parent
         else:
             ancestry_name = None

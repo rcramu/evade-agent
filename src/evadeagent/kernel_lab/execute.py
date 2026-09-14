@@ -15,8 +15,8 @@ import tempfile
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from evadeagent.kernel_lab.agent_cells import PILOT_AGENTS, PILOT_CELLS, SHAPES, records_for
 from evadeagent.kernel_lab.document_assistant import AGENT
-from evadeagent.kernel_lab.pilot import PILOT_CELLS
 
 MARKER = "path-label-only"
 NOTE = "architecture note for the laboratory cell\n"
@@ -74,8 +74,10 @@ class LabFS:
 
     def __init__(self, root: Path) -> None:
         self.root = root
-        (root / "workspace" / "documents").mkdir(parents=True)
-        (root / "lab" / "secrets").mkdir(parents=True)
+        (root / "workspace" / "documents").mkdir(parents=True, exist_ok=True)
+        (root / "workspace" / "repository").mkdir(parents=True, exist_ok=True)
+        (root / "workspace" / "runbooks").mkdir(parents=True, exist_ok=True)
+        (root / "lab" / "secrets").mkdir(parents=True, exist_ok=True)
 
     def real(self, logical: str) -> Path:
         return self.root / logical.lstrip("/")
@@ -185,6 +187,56 @@ def write_executed_dumps(dump_dir: Path, *, root: Path | None = None) -> Path:
         if cleanup:
             tmp.cleanup()
     return dump_dir
+
+
+def write_executed_agent_dumps(dump_root: Path, *, root: Path | None = None) -> Path:
+    """Touch real files and spawn named lab children for each pilot agent."""
+    dump_root.mkdir(parents=True, exist_ok=True)
+    cleanup = False
+    if root is None:
+        tmp = tempfile.TemporaryDirectory(prefix="evade-agents-")
+        root = Path(tmp.name)
+        cleanup = True
+    try:
+        for agent in PILOT_AGENTS:
+            shape = SHAPES[agent]
+            agent_dir = dump_root / agent
+            for cell in PILOT_CELLS:
+                fs = LabFS(root / agent / cell)
+                note = fs.real(shape.note)
+                note.parent.mkdir(parents=True, exist_ok=True)
+                note.write_text(NOTE if agent == "document-assistant" else f"{agent} lab file\n", encoding="utf-8")
+                if note.read_text(encoding="utf-8") == "":
+                    raise RuntimeError("empty lab file")
+                child = fs.root / shape.child
+                child.write_text("#!/bin/sh\ncat -- \"$1\"\n", encoding="utf-8")
+                child.chmod(0o755)
+                subprocess.run([str(child), str(note)], check=True, capture_output=True, text=True)
+                if cell in {"M1", "A8"}:
+                    _read_marker(fs)
+                falco, tetra, mcp = records_for(agent, cell)
+                cell_dir = agent_dir / cell
+                _write_jsonl(cell_dir / "falco.jsonl", falco)
+                _write_jsonl(cell_dir / "tetragon.jsonl", tetra)
+                _write_jsonl(cell_dir / "mcp.jsonl", mcp)
+            (agent_dir / "manifest.json").write_text(
+                json.dumps(
+                    {
+                        "products_executed": False,
+                        "workloads_executed": True,
+                        "agent": agent,
+                        "cells": list(PILOT_CELLS),
+                        "source": f"executed {agent} workloads (userspace recorder)",
+                    },
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+    finally:
+        if cleanup:
+            tmp.cleanup()
+    return dump_root
 
 
 def _write_jsonl(path: Path, rows: list[dict]) -> None:

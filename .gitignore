@@ -7,6 +7,7 @@ kernel-lab/dumps/live-tetragon/tetra.err
 kernel-lab/dumps/hybrid/
 kernel-lab/dumps/executed/
 kernel-lab/dumps/phase2/
+kernel-lab/dumps/agents/
 kernel-lab/dumps/live-mcp/agent.ok
 kernel-lab/compose/certs/
 __pycache__/

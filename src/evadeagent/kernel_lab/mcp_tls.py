@@ -19,13 +19,64 @@ from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-TOOLS = {
-    "document.search": "mcp://documents/search",
-    "document.read": "mcp://documents/read",
+TOOL_SPEC = {
+    "document.search": {"uri": "mcp://documents/search", "root": "/workspace/documents", "kind": "list"},
+    "document.read": {
+        "uri": "mcp://documents/read",
+        "root": "/workspace/documents",
+        "kind": "read",
+        "default": "note.md",
+    },
+    "git.read": {"uri": "mcp://git/read", "root": "/workspace/repository", "kind": "list"},
+    "git.write": {
+        "uri": "mcp://git/write",
+        "root": "/workspace/repository",
+        "kind": "write",
+        "default": "src.py",
+    },
+    "test.execute": {
+        "uri": "mcp://test/run",
+        "root": "/workspace/repository",
+        "kind": "read",
+        "default": "src.py",
+    },
+    "k8s.observe": {"uri": "mcp://k8s/observe", "root": "/workspace/runbooks", "kind": "list"},
+    "k8s.diagnose": {
+        "uri": "mcp://k8s/diagnose",
+        "root": "/workspace/runbooks",
+        "kind": "read",
+        "default": "restart.md",
+    },
+    "k8s.restart": {
+        "uri": "mcp://k8s/restart",
+        "root": "/workspace/runbooks",
+        "kind": "write",
+        "default": "restart.md",
+    },
 }
+TOOLS = {name: spec["uri"] for name, spec in TOOL_SPEC.items()}
 WORKSPACE_PREFIX = "/workspace/documents"
 NOTE_NAME = "note.md"
 NOTE_TEXT = "architecture note for the laboratory cell\n"
+REPO_TEXT = "print('lab-edit')\n"
+RUNBOOK_TEXT = "restart the labelled lab workload\n"
+
+AGENT_SESSION = {
+    "document-assistant": (
+        ("document.search", 0, {}),
+        ("document.read", 1, {"path": "/workspace/documents/note.md"}),
+    ),
+    "coding-agent": (
+        ("git.read", 0, {}),
+        ("git.write", 1, {"path": "/workspace/repository/src.py"}),
+        ("test.execute", 2, {"path": "/workspace/repository/src.py"}),
+    ),
+    "devops-agent": (
+        ("k8s.observe", 0, {}),
+        ("k8s.diagnose", 1, {"path": "/workspace/runbooks/restart.md"}),
+        ("k8s.restart", 2, {"path": "/workspace/runbooks/restart.md"}),
+    ),
+}
 
 
 class McpError(RuntimeError):
@@ -98,11 +149,16 @@ class LabMcp:
         self.workspace = workspace
         self.audit = audit
         self._token = token
-        docs = workspace / "workspace" / "documents"
-        docs.mkdir(parents=True, exist_ok=True)
-        note = docs / NOTE_NAME
-        if not note.is_file():
-            note.write_text(NOTE_TEXT, encoding="utf-8")
+        trees = {
+            "workspace/documents/note.md": NOTE_TEXT,
+            "workspace/repository/src.py": REPO_TEXT,
+            "workspace/runbooks/restart.md": RUNBOOK_TEXT,
+        }
+        for rel, text in trees.items():
+            path = workspace / rel
+            path.parent.mkdir(parents=True, exist_ok=True)
+            if not path.is_file():
+                path.write_text(text, encoding="utf-8")
         self.audit.parent.mkdir(parents=True, exist_ok=True)
 
     def authorized(self, header: str) -> bool:
@@ -113,21 +169,30 @@ class LabMcp:
         return hmac.compare_digest(offered, self._token)
 
     def call(self, tool: str, args: dict[str, Any], t: int) -> dict[str, Any]:
-        if tool not in TOOLS:
+        spec = TOOL_SPEC.get(tool)
+        if spec is None:
             raise McpError(f"unknown tool {tool}")
-        if tool == "document.search":
-            result = {"hits": [f"{WORKSPACE_PREFIX}/{NOTE_NAME}"]}
+        root = spec["root"]
+        kind = spec["kind"]
+        default = spec.get("default", "")
+        if kind == "list":
+            result = {"hits": [f"{root}/{default}" if default else root]}
         else:
-            logical = str(args.get("path") or f"{WORKSPACE_PREFIX}/{NOTE_NAME}")
-            if not logical.startswith(WORKSPACE_PREFIX):
-                raise McpError("path outside /workspace/documents")
-            rel = logical[len(WORKSPACE_PREFIX) :].lstrip("/")
-            text = (self.workspace / "workspace" / "documents" / rel).read_text(encoding="utf-8")
+            logical = str(args.get("path") or f"{root}/{default}")
+            if not logical.startswith(root):
+                raise McpError(f"path outside {root}")
+            rel = logical[len(root) :].lstrip("/")
+            real = self.workspace / root.lstrip("/") / rel
+            if kind == "write":
+                real.parent.mkdir(parents=True, exist_ok=True)
+                seed = REPO_TEXT if "repository" in root else RUNBOOK_TEXT
+                real.write_text(real.read_text(encoding="utf-8") if real.is_file() else seed, encoding="utf-8")
+            text = real.read_text(encoding="utf-8")
             result = {"path": logical, "chars": len(text)}
-        row = {"uri": TOOLS[tool], "tool": tool, "t": t, "tls": "TLSv1.3"}
+        row = {"uri": spec["uri"], "tool": tool, "t": t, "tls": "TLSv1.3"}
         with self.audit.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(row, separators=(",", ":")) + "\n")
-        return {"ok": True, "tool": tool, "uri": TOOLS[tool], "result": result}
+        return {"ok": True, "tool": tool, "uri": spec["uri"], "result": result}
 
     def handler(self) -> type[BaseHTTPRequestHandler]:
         mcp = self
@@ -211,11 +276,24 @@ def call_tool(url: str, ca: Path, token: str, tool: str, t: int, args: dict[str,
 
 
 def run_document_session(url: str, ca: Path, token: str, *, extra_read: bool = False) -> list[dict[str, Any]]:
-    """One document-assistant tool sequence. Returns the live audit rows."""
-    call_tool(url, ca, token, "document.search", 0)
-    call_tool(url, ca, token, "document.read", 1, {"path": f"{WORKSPACE_PREFIX}/{NOTE_NAME}"})
-    if extra_read:
-        call_tool(url, ca, token, "document.read", 5, {"path": f"{WORKSPACE_PREFIX}/{NOTE_NAME}"})
+    return run_agent_session(url, ca, token, "document-assistant", extra=extra_read)
+
+
+def run_agent_session(
+    url: str,
+    ca: Path,
+    token: str,
+    agent: str,
+    *,
+    extra: bool = False,
+) -> list[dict[str, Any]]:
+    """File-only TLS session for one lab agent. devops tools do not call a cluster."""
+    steps = AGENT_SESSION[agent]
+    for tool, tick, args in steps:
+        call_tool(url, ca, token, tool, tick, args)
+    if extra:
+        tool, _tick, args = steps[-1]
+        call_tool(url, ca, token, tool, 5, args)
     return []
 
 

@@ -14,13 +14,14 @@ from evadeagent.detectors import detect
 from pathlib import Path
 
 from evadeagent.kernel_lab.collect import load_cell_dir, load_manifest
-from evadeagent.kernel_lab.document_assistant import (
-    AGENT,
+from evadeagent.kernel_lab.agent_cells import (
     ENCODING_KIND,
     EXPECTED,
+    PILOT_AGENTS,
     context_for,
     observations_for,
 )
+from evadeagent.kernel_lab.document_assistant import AGENT
 from evadeagent.lab import build_trace
 from evadeagent.models import DetectorMode
 from evadeagent.observe import SCHEMA, assemble_trace
@@ -30,7 +31,7 @@ MODES = (DetectorMode.B4, DetectorMode.B5, DetectorMode.C5)
 PILOT_SCHEMA = "evadeagent-eval-v4-pilot"
 
 
-def run_pilot(dump_dir: Path | None = None) -> dict:
+def run_pilot(dump_dir: Path | None = None, *, agent: str = AGENT) -> dict:
     started = datetime.now(timezone.utc).isoformat()
     cells: dict[str, dict] = {}
     mismatches: list[str] = []
@@ -43,14 +44,14 @@ def run_pilot(dump_dir: Path | None = None) -> dict:
     source = str(manifest.get("source", dump_dir or "in-memory fixtures"))
 
     for cell in PILOT_CELLS:
-        run_id = f"{AGENT}-{cell}"
+        run_id = f"{agent}-{cell}"
         if dump_dir is not None:
             events = load_cell_dir(dump_dir / cell, run_id)
         else:
-            events = observations_for(cell, run_id)
-        assembled = assemble_trace(context_for(cell, run_id), events)
+            events = observations_for(agent, cell, run_id)
+        assembled = assemble_trace(context_for(agent, cell, run_id), events)
         shape_decisions = {mode.value: detect(mode, assembled.trace).name for mode in MODES}
-        encoding = build_trace(AGENT, ENCODING_KIND[cell])
+        encoding = build_trace(agent, ENCODING_KIND[cell])
         encoding_decisions = {mode.value: detect(mode, encoding).name for mode in MODES}
         expected = EXPECTED[cell]
         row = {
@@ -94,7 +95,7 @@ def run_pilot(dump_dir: Path | None = None) -> dict:
         "tls_version": manifest.get("tls_version"),
         "source": source,
         "dump_dir": str(dump_dir) if dump_dir is not None else None,
-        "agent": AGENT,
+        "agent": agent,
         "cells": cells,
         "mismatches": mismatches,
         "encoding_disagreements": encoding_disagreements,
