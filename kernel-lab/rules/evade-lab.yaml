@@ -13,3 +13,10 @@
   output: evade_shell proc=%proc.name evt_time=%evt.time
   priority: WARNING
   tags: [evade-lab]
+
+- rule: EVADE Lab Sink Process
+  desc: Laboratory sink process-name class (exfil-sink, paste-host)
+  condition: spawned_process and proc.name in (exfil-sink, paste-host)
+  output: evade_sink proc=%proc.name evt_time=%evt.time
+  priority: WARNING
+  tags: [evade-lab]

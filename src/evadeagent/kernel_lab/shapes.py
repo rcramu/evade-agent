@@ -142,6 +142,10 @@ def tetragon_events_to_observations(
             "document-assistant",
             "coding-agent",
             "devops-agent",
+            "database-agent",
+            "knowledge-agent",
+            "ticket-agent",
+            "mail-agent",
             "unrelated-init",
         }:
             ancestry_name = binary
@@ -149,6 +153,10 @@ def tetragon_events_to_observations(
             "document-assistant",
             "coding-agent",
             "devops-agent",
+            "database-agent",
+            "knowledge-agent",
+            "ticket-agent",
+            "mail-agent",
             "unrelated-init",
         }:
             ancestry_name = parent

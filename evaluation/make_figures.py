@@ -1,4 +1,8 @@
-"""Render manuscript Figures 11–14 from approach_comparison.json. Not generative AI."""
+"""Render manuscript Figures 11–16 from evaluation JSON. Not generative AI.
+
+Figures 11–14 use approach_comparison.json (Section 8).
+Figures 15–16 use kernel_pilot_agents.json (Appendix D; not Section 8).
+"""
 
 from __future__ import annotations
 
@@ -10,7 +14,19 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "evaluation" / "results" / "approach_comparison.json"
+AGENTS_SOURCE = ROOT / "evaluation" / "results" / "kernel_pilot_agents.json"
 OUT = ROOT / "figures"
+PILOT_CELLS = ("L1", "M1", "A6", "A8", "A9")
+PILOT_MODES = ("B4", "B5", "C5")
+AGENT_SHORT = {
+    "document-assistant": "document",
+    "coding-agent": "coding",
+    "devops-agent": "devops",
+    "database-agent": "database",
+    "knowledge-agent": "knowledge",
+    "ticket-agent": "ticket",
+    "mail-agent": "mail",
+}
 MODES = ("B1", "B2", "B3", "B4", "B5", "C5")
 LABELS = {
     "B1": "B1 policy",
@@ -133,6 +149,58 @@ def figure13(data: dict) -> None:
     plt.close(fig)
 
 
+def figure15(agents: dict) -> None:
+    """Appendix D. Three-agent B4/B5/C5 decisions. Not Section 8."""
+    labels = []
+    grid = []
+    for agent, row in agents.items():
+        short = AGENT_SHORT.get(agent, agent)
+        for cell in PILOT_CELLS:
+            labels.append(f"{short} {cell}")
+            shape = ((row.get("cells") or {}).get(cell) or {}).get("shape") or {}
+            grid.append([1.0 if shape.get(mode) == "BLOCK" else 0.0 for mode in PILOT_MODES])
+    fig, ax = plt.subplots(figsize=(6.4, 11.2))
+    im = ax.imshow(grid, cmap="Blues", vmin=0, vmax=1, aspect="auto")
+    ax.set_xticks(range(len(PILOT_MODES)))
+    ax.set_xticklabels(PILOT_MODES)
+    ax.set_yticks(range(len(labels)))
+    ax.set_yticklabels(labels)
+    ax.set_title("Figure 15. Five-cell decisions after product join (three agents)")
+    cbar = fig.colorbar(im, ax=ax, fraction=0.046, pad=0.08, ticks=[0, 1])
+    cbar.ax.set_yticklabels(["ALLOW", "BLOCK"])
+    cbar.set_label("Decision")
+    fig.tight_layout()
+    fig.savefig(OUT / "figure-15-kernel-decisions.png", dpi=200)
+    plt.close(fig)
+
+
+def figure16(agents: dict) -> None:
+    """Appendix D. Capture completeness. Not Section 8."""
+    labels = []
+    emitted = []
+    seen = []
+    for agent, row in agents.items():
+        short = AGENT_SHORT.get(agent, agent)
+        for cell in PILOT_CELLS:
+            cap = ((row.get("cells") or {}).get(cell) or {}).get("capture") or {}
+            labels.append(f"{short} {cell}")
+            emitted.append(int(cap.get("emitted") or 0))
+            seen.append(int(cap.get("seen") or 0))
+    y = range(len(labels))
+    fig, ax = plt.subplots(figsize=(7.6, 11.2))
+    ax.barh([yi + 0.16 for yi in y], emitted, height=0.3, color="#9aa0a6", label="emitted")
+    ax.barh([yi - 0.16 for yi in y], seen, height=0.3, color="#1b4d6e", label="seen")
+    ax.set_yticks(list(y))
+    ax.set_yticklabels(labels)
+    ax.invert_yaxis()
+    ax.set_xlabel("Observations")
+    ax.set_title("Figure 16. Capture completeness after product join")
+    ax.legend(frameon=False)
+    fig.tight_layout()
+    fig.savefig(OUT / "figure-16-kernel-capture.png", dpi=200)
+    plt.close(fig)
+
+
 def _copy_pack() -> None:
     pack = ROOT.parent / "jss-submission" / "figures"
     if not pack.is_dir():
@@ -142,8 +210,12 @@ def _copy_pack() -> None:
         "figure-12-ablation.png",
         "figure-13-residual.png",
         "figure-14-latency.png",
+        "figure-15-kernel-decisions.png",
+        "figure-16-kernel-capture.png",
     ):
-        shutil.copy2(OUT / name, pack / name)
+        src = OUT / name
+        if src.is_file():
+            shutil.copy2(src, pack / name)
 
 
 def main() -> int:
@@ -153,11 +225,23 @@ def main() -> int:
     figure7(data)
     figure8(data)
     figure13(data)
+    if AGENTS_SOURCE.is_file():
+        agents = json.loads(AGENTS_SOURCE.read_text(encoding="utf-8")).get("agents") or {}
+        if agents:
+            figure15(agents)
+            figure16(agents)
     _copy_pack()
-    print(f"wrote {OUT / 'figure-11-detection.png'}")
-    print(f"wrote {OUT / 'figure-12-ablation.png'}")
-    print(f"wrote {OUT / 'figure-13-residual.png'}")
-    print(f"wrote {OUT / 'figure-14-latency.png'}")
+    for name in (
+        "figure-11-detection.png",
+        "figure-12-ablation.png",
+        "figure-13-residual.png",
+        "figure-14-latency.png",
+        "figure-15-kernel-decisions.png",
+        "figure-16-kernel-capture.png",
+    ):
+        path = OUT / name
+        if path.is_file():
+            print(f"wrote {path}")
     return 0
 
 

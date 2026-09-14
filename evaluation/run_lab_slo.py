@@ -50,6 +50,63 @@ def main() -> int:
             "mismatches": pilot.get("mismatches") or [],
         },
     }
+    agents_path = _ROOT / "evaluation" / "results" / "kernel_pilot_agents.json"
+    if agents_path.is_file():
+        agents_src = json.loads(agents_path.read_text(encoding="utf-8"))
+        agent_rows: dict = {}
+        for name, row in (agents_src.get("agents") or {}).items():
+            agent_rows[name] = {
+                "products_executed": row.get("products_executed"),
+                "mismatches": row.get("mismatches") or [],
+                "cells": {
+                    cell: {
+                        "B4": (item.get("shape") or {}).get("B4"),
+                        "B5": (item.get("shape") or {}).get("B5"),
+                        "C5": (item.get("shape") or {}).get("C5"),
+                        "emitted": (item.get("capture") or {}).get("emitted"),
+                        "seen": (item.get("capture") or {}).get("seen"),
+                        "complete": (item.get("capture") or {}).get("complete"),
+                    }
+                    for cell, item in (row.get("cells") or {}).items()
+                },
+            }
+        payload["agents"] = agent_rows
+        payload["lab"]["agent_count"] = len(agent_rows)
+        payload["lab"]["agent_mismatches"] = agents_src.get("mismatches") or []
+    tetra = _ROOT / "kernel-lab" / "dumps" / "live-tetragon" / "tetragon.jsonl"
+    falco = _ROOT / "kernel-lab" / "dumps" / "live-m1" / "falco.jsonl"
+    falco_agents = _ROOT / "kernel-lab" / "dumps" / "live-m1" / "agents"
+    sinks = _ROOT / "kernel-lab" / "dumps" / "live-sinks" / "falco.jsonl"
+    a8 = _ROOT / "kernel-lab" / "dumps" / "live-a8" / "falco.jsonl"
+    payload["lab"]["tetragon_process_exec"] = (
+        sum(1 for line in tetra.read_text(encoding="utf-8").splitlines() if line.strip())
+        if tetra.is_file()
+        else 0
+    )
+    per_agent = 0
+    if falco_agents.is_dir():
+        for path in falco_agents.glob("*/falco.jsonl"):
+            per_agent += sum(1 for line in path.read_text(encoding="utf-8").splitlines() if line.strip())
+    payload["lab"]["falco_alerts"] = per_agent or (
+        sum(1 for line in falco.read_text(encoding="utf-8").splitlines() if line.strip())
+        if falco.is_file()
+        else 0
+    )
+    payload["lab"]["falco_agent_files"] = per_agent
+    payload["lab"]["sink_process_alerts"] = (
+        sum(1 for line in sinks.read_text(encoding="utf-8").splitlines() if line.strip())
+        if sinks.is_file()
+        else 0
+    )
+    payload["lab"]["a8_product_path_alerts"] = 0
+    if a8.is_file():
+        payload["lab"]["a8_product_path_alerts"] = sum(
+            1
+            for line in a8.read_text(encoding="utf-8").splitlines()
+            if line.strip() and json.loads(line).get("rule") == "EVADE Lab Sensitive Path"
+        )
+    payload["lab"]["falco_executed"] = pilot.get("falco_executed")
+    payload["lab"]["tetragon_executed"] = pilot.get("tetragon_executed")
     out = _ROOT / "evaluation" / "results" / "lab_slo.json"
     out.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     print(f"wrote {out} field_executed={field_executed} capture_complete={complete}/{len(cells)}")

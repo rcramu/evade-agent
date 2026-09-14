@@ -1,6 +1,6 @@
 {
   "schema": "evadeagent-eval-v5-lab",
-  "generated_utc": "2026-09-13T23:51:23.063773+00:00",
+  "generated_utc": "2026-09-14T00:25:12.094869+00:00",
   "field_executed": false,
   "source": "kernel_pilot operational metrics",
   "note": "Field SLO needs a production platform and is not claimed. These numbers are lab-side: five-cell detect + capture completeness.",
@@ -8,12 +8,345 @@
     "cells": 5,
     "capture_complete": 4,
     "capture_complete_rate": 0.8,
-    "cpu_seconds": 0.114675,
-    "peak_rss_mib": 29.515625,
+    "cpu_seconds": 0.10149699999999999,
+    "peak_rss_mib": 29.53125,
     "products_executed": true,
     "mcp_executed": true,
     "observer_executed": true,
     "tls_version": "TLSv1.3",
-    "mismatches": []
+    "mismatches": [],
+    "agent_count": 7,
+    "agent_mismatches": [],
+    "tetragon_process_exec": 33,
+    "falco_alerts": 28,
+    "falco_agent_files": 28,
+    "sink_process_alerts": 2,
+    "a8_product_path_alerts": 0,
+    "falco_executed": true,
+    "tetragon_executed": true
+  },
+  "agents": {
+    "document-assistant": {
+      "products_executed": true,
+      "mismatches": [],
+      "cells": {
+        "L1": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "ALLOW",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "M1": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "A6": {
+          "B4": "ALLOW",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "A8": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "ALLOW",
+          "emitted": 12,
+          "seen": 8,
+          "complete": false
+        },
+        "A9": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        }
+      }
+    },
+    "coding-agent": {
+      "products_executed": true,
+      "mismatches": [],
+      "cells": {
+        "L1": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "ALLOW",
+          "emitted": 14,
+          "seen": 14,
+          "complete": true
+        },
+        "M1": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 10,
+          "seen": 10,
+          "complete": true
+        },
+        "A6": {
+          "B4": "ALLOW",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "A8": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "ALLOW",
+          "emitted": 14,
+          "seen": 10,
+          "complete": false
+        },
+        "A9": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "BLOCK",
+          "emitted": 10,
+          "seen": 10,
+          "complete": true
+        }
+      }
+    },
+    "devops-agent": {
+      "products_executed": true,
+      "mismatches": [],
+      "cells": {
+        "L1": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "ALLOW",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "M1": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "A6": {
+          "B4": "ALLOW",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "A8": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "ALLOW",
+          "emitted": 12,
+          "seen": 8,
+          "complete": false
+        },
+        "A9": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        }
+      }
+    },
+    "database-agent": {
+      "products_executed": true,
+      "mismatches": [],
+      "cells": {
+        "L1": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "ALLOW",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "M1": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "A6": {
+          "B4": "ALLOW",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "A8": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "ALLOW",
+          "emitted": 12,
+          "seen": 8,
+          "complete": false
+        },
+        "A9": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        }
+      }
+    },
+    "knowledge-agent": {
+      "products_executed": true,
+      "mismatches": [],
+      "cells": {
+        "L1": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "ALLOW",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "M1": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "A6": {
+          "B4": "ALLOW",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "A8": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "ALLOW",
+          "emitted": 12,
+          "seen": 8,
+          "complete": false
+        },
+        "A9": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        }
+      }
+    },
+    "ticket-agent": {
+      "products_executed": true,
+      "mismatches": [],
+      "cells": {
+        "L1": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "ALLOW",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "M1": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "A6": {
+          "B4": "ALLOW",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "A8": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "ALLOW",
+          "emitted": 12,
+          "seen": 8,
+          "complete": false
+        },
+        "A9": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        }
+      }
+    },
+    "mail-agent": {
+      "products_executed": true,
+      "mismatches": [],
+      "cells": {
+        "L1": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "ALLOW",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "M1": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "A6": {
+          "B4": "ALLOW",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        },
+        "A8": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "ALLOW",
+          "emitted": 12,
+          "seen": 8,
+          "complete": false
+        },
+        "A9": {
+          "B4": "ALLOW",
+          "B5": "ALLOW",
+          "C5": "BLOCK",
+          "emitted": 8,
+          "seen": 8,
+          "complete": true
+        }
+      }
+    }
   }
 }

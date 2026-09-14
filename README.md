@@ -24,6 +24,7 @@ python3 -m venv .venv
 .venv/bin/pytest -q
 .venv/bin/python evaluation/run.py --repeats 200 --seed 20260911
 .venv/bin/python evaluation/make_figures.py
+.venv/bin/python evaluation/run_lab_slo.py
 ```
 
 Dataset: `evaluation/results/approach_comparison.json` (`schema: evadeagent-eval-v3`, 616 unique templates, 7 agents, 4 plan paraphrases, `repeats=200` latency variants, `base_seed=20260911`).

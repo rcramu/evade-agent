@@ -87,17 +87,21 @@ Those fields are not dropped when the host probe misses an event.
 
 Lab-only fields on fixture JSON live under `_lab` (including `seen`).
 
-## Phase 1 — product B4 / B5 (next, after this pilot)
+## Phase 1 — product B4 / B5
 
-**Host.** A Linux VM you admin. Not the Compose lab.
+**Achieved on this host** (Docker Desktop / LinuxKit, not a separate VM).
 
-**Pilot agent.** `document-assistant`. Then `coding-agent`. `devops-agent` last.
+**Pilot agents.** All seven Section 8 agents. DevOps tools stay file-only
+runbooks (no cluster). Coding L1 uses the real `git` client when the image
+provides it.
 
-**Products.** Pin Falco and Tetragon versions in JSON `host`. Rules implement
-**only** manuscript Table C.1 classes. No extra macros unless you add `B4+`.
+**Products.** Falco 0.44.1 on per-agent M1 plus lab sink-process names.
+Tetragon 1.7.0 on L1/A6. Rules implement manuscript Table C.1 classes.
+A8 is a designed product miss (no `/lab/secrets` open). A9 remains temporal
+on the executed recorder: products do not invert timestamps.
 
-The five cells and expected decisions are already locked in
-`EXPECTED` (`document_assistant.py`) and checked by `tests/test_kernel_pilot.py`.
+The five cells and expected decisions are locked in `EXPECTED`
+(`agent_cells.py`) and checked by `tests/test_kernel_pilot.py`.
 
 A product run replaces fixture JSON with collector output, sets
 `products_executed: true`, and writes a new file. Do not overwrite

@@ -2,6 +2,16 @@
 kernel-lab/dumps/live-m1/falco.raw
 kernel-lab/dumps/live-m1/falco.stdout
 kernel-lab/dumps/live-m1/falco.stderr
+kernel-lab/dumps/live-m1/agents/*/falco.raw
+kernel-lab/dumps/live-m1/agents/*/falco.stdout
+kernel-lab/dumps/live-m1/agents/*/falco.stderr
+kernel-lab/dumps/live-sinks/falco.raw
+kernel-lab/dumps/live-sinks/falco.stdout
+kernel-lab/dumps/live-sinks/falco.stderr
+kernel-lab/dumps/live-a8/falco.raw
+kernel-lab/dumps/live-a8/falco.stdout
+kernel-lab/dumps/live-a8/falco.stderr
+kernel-lab/workloads/bin/
 kernel-lab/dumps/live-tetragon/tetragon.raw
 kernel-lab/dumps/live-tetragon/tetra.err
 kernel-lab/dumps/hybrid/

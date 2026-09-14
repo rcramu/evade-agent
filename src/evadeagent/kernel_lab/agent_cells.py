@@ -1,4 +1,4 @@
-"""Five-cell event-shape fixtures for document-assistant, coding-agent, devops-agent.
+"""Five-cell event-shape fixtures for all seven Section 8 agents.
 
 Uses the same L1/M1/A6/A8/A9 EXPECTED decisions as document-assistant.
 Paths are contract labels. devops tools are file-only runbooks, not a cluster.
@@ -16,7 +16,15 @@ from evadeagent.kernel_lab.shapes import (
     tetragon_events_to_observations,
 )
 
-PILOT_AGENTS = ("document-assistant", "coding-agent", "devops-agent")
+PILOT_AGENTS = (
+    "document-assistant",
+    "coding-agent",
+    "devops-agent",
+    "database-agent",
+    "knowledge-agent",
+    "ticket-agent",
+    "mail-agent",
+)
 PILOT_CELLS = ("L1", "M1", "A6", "A8", "A9")
 
 ENCODING_KIND = {
@@ -70,6 +78,38 @@ SHAPES: dict[str, AgentShape] = {
         "/workspace/runbooks",
         "/workspace/runbooks/restart.md",
         ("kubernetes-api",),
+    ),
+    "database-agent": AgentShape(
+        "database-agent",
+        "query-engine",
+        None,
+        "/workspace/reports",
+        "/workspace/reports/report.md",
+        ("database-api",),
+    ),
+    "knowledge-agent": AgentShape(
+        "knowledge-agent",
+        "vector-client",
+        None,
+        "/workspace/index",
+        "/workspace/index/note.md",
+        ("search-api", "vector-db", "llm-api"),
+    ),
+    "ticket-agent": AgentShape(
+        "ticket-agent",
+        "ticket-client",
+        None,
+        "/workspace/tickets",
+        "/workspace/tickets/ticket.md",
+        ("ticket-api",),
+    ),
+    "mail-agent": AgentShape(
+        "mail-agent",
+        "mail-client",
+        None,
+        "/workspace/mail",
+        "/workspace/mail/draft.md",
+        ("mail-api", "llm-api"),
     ),
 }
 

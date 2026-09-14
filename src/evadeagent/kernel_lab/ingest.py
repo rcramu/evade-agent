@@ -22,12 +22,27 @@ _LAB_BINARIES = frozenset(
         "test-runner",
         "devops-agent",
         "kubectl",
+        "database-agent",
+        "query-engine",
+        "knowledge-agent",
+        "vector-client",
+        "ticket-agent",
+        "ticket-client",
+        "mail-agent",
+        "mail-client",
+        "helper-worker",
+        "exfil-sink",
+        "paste-host",
     }
 )
 _AGENT_KEEP = {
     "document-assistant": frozenset({"document-assistant", "document-reader"}),
     "coding-agent": frozenset({"coding-agent", "git", "test-runner"}),
     "devops-agent": frozenset({"devops-agent", "kubectl"}),
+    "database-agent": frozenset({"database-agent", "query-engine"}),
+    "knowledge-agent": frozenset({"knowledge-agent", "vector-client"}),
+    "ticket-agent": frozenset({"ticket-agent", "ticket-client"}),
+    "mail-agent": frozenset({"mail-agent", "mail-client"}),
 }
 
 

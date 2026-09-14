@@ -10,9 +10,9 @@ Campaign entry point: `evaluation/run.py`.
 | Seed | `20260911` |
 | Agents | document-assistant, coding-agent, devops-agent, database-agent, knowledge-agent, ticket-agent, mail-agent |
 
-Detectors: B1 policy, B2 telemetry, B3 event signatures, B4 Falco-style host rules, B5 Tetragon-style lineage, C1–C5 ablation (C5 = full EVADE-AGENT). B4 and B5 are encodings. The lab does not run Falco or Tetragon and does not load kernel BPF.
+Detectors: B1 policy, B2 telemetry, B3 event signatures, B4 Falco-style host rules, B5 Tetragon-style lineage, C1–C5 ablation (C5 = full EVADE-AGENT). Section 8 B4 and B5 are encodings. That campaign does not run Falco or Tetragon and does not load kernel BPF.
 
-Kernel / MCP follow-up (not this campaign): `docs/kernel-lab.md`. Event-shape pilot: `evaluation/run_kernel_pilot.py` → `evaluation/results/kernel_pilot.json`. Products are not executed.
+Kernel / MCP follow-up (not Section 8): `docs/kernel-lab.md`. Event-shape plus product join: `evaluation/run_kernel_pilot.py` and `evaluation/run_agent_pilots.py`. Falco 0.44.1 and Tetragon 1.7.0 are joined on selected cells in Appendix D only.
 
 Copy numeric tables from `evaluation/results/approach_comparison.json`. Tables 8–11 are `tables.table4`–`table7`. Table 4 is `tables.alignment_walk`. Table 13 is `tables.per_agent_c5`. Do not retype cells. Do not treat JSON Fisher `p` as a sampling inference.
 

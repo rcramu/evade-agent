@@ -4,7 +4,7 @@ All numbers in the JSS manuscript Section 8 / Tables 8–11, plus Table 4 (`tabl
 
 The supported way to regenerate them is **Docker Compose**. A local virtualenv is optional.
 
-`docs/kernel-lab.md` describes the product-observer follow-up. Compose also runs `evaluation/run_kernel_pilot.py`, which writes `evaluation/results/kernel_pilot.json` and does not overwrite this JSON. That pilot uses event-shape fixtures; it does not execute Falco or Tetragon.
+`docs/kernel-lab.md` describes the product-observer follow-up. Compose writes `evaluation/results/kernel_pilot.json` and does not overwrite the v3 JSON. Live Falco/Tetragon captures are joined when `kernel-lab/dumps/live-*` exist. Those cells belong in Appendix D, not Section 8.
 
 ## What is already captured
 
@@ -15,6 +15,10 @@ The supported way to regenerate them is **Docker Compose**. A local virtualenv i
 | `figures/figure-12-ablation.png` | Ablation C1–C5 (manuscript Figure 12) |
 | `figures/figure-13-residual.png` | Residual heatmap (manuscript Figure 13) |
 | `figures/figure-14-latency.png` | In-process `detect()` latency (manuscript Figure 14) |
+| `figures/figure-15-kernel-decisions.png` | Appendix D five-cell decisions (not Section 8) |
+| `figures/figure-16-kernel-capture.png` | Appendix D capture completeness (not Section 8) |
+| `evaluation/results/kernel_pilot_agents.json` | Three-agent five-cell product join |
+| `evaluation/results/lab_slo.json` | Lab-side metrics (`field_executed: false`) |
 
 Detection tables use unique templates. Repeats measure latency and confirm decision invariance. They are not independent security worlds.
 
@@ -31,7 +35,7 @@ That command:
 1. builds `evadeagent-lab:local` (Python 3.12.11)
 2. runs the unit tests
 3. re-runs the seeded campaign (`repeats=200`, seed `20260911`)
-4. rewrites Figures 11–14
+4. rewrites Figures 11–14 (and 15–16 when agent-pilot JSON is present)
 
 Useful overrides (same image, no rebuild after the first time):
 

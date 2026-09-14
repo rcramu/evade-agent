@@ -77,6 +77,10 @@ class LabFS:
         (root / "workspace" / "documents").mkdir(parents=True, exist_ok=True)
         (root / "workspace" / "repository").mkdir(parents=True, exist_ok=True)
         (root / "workspace" / "runbooks").mkdir(parents=True, exist_ok=True)
+        (root / "workspace" / "reports").mkdir(parents=True, exist_ok=True)
+        (root / "workspace" / "index").mkdir(parents=True, exist_ok=True)
+        (root / "workspace" / "tickets").mkdir(parents=True, exist_ok=True)
+        (root / "workspace" / "mail").mkdir(parents=True, exist_ok=True)
         (root / "lab" / "secrets").mkdir(parents=True, exist_ok=True)
 
     def real(self, logical: str) -> Path:

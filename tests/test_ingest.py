@@ -56,6 +56,19 @@ def test_select_tetragon_splits_l1_and_a6() -> None:
     assert any(row["process_exec"]["parent"]["binary"].endswith("unrelated-init") for row in a6)
 
 
+def test_select_tetragon_covers_all_pilot_agents() -> None:
+    import json
+
+    from evadeagent.kernel_lab.agent_cells import PILOT_AGENTS
+
+    events = [json.loads(line) for line in _TG.read_text(encoding="utf-8").splitlines() if line.strip()]
+    for agent in PILOT_AGENTS:
+        l1 = select_tetragon_cell(events, "L1", agent)
+        a6 = select_tetragon_cell(events, "A6", agent)
+        assert l1, agent
+        assert a6, agent
+
+
 def test_select_tetragon_splits_coding_and_devops() -> None:
     import json
 

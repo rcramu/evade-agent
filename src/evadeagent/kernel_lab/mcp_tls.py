@@ -53,6 +53,34 @@ TOOL_SPEC = {
         "kind": "write",
         "default": "restart.md",
     },
+    "db.query": {"uri": "mcp://db/query", "root": "/workspace/reports", "kind": "list"},
+    "report.generate": {
+        "uri": "mcp://report/generate",
+        "root": "/workspace/reports",
+        "kind": "write",
+        "default": "report.md",
+    },
+    "search.query": {"uri": "mcp://search/query", "root": "/workspace/index", "kind": "list"},
+    "vector.lookup": {
+        "uri": "mcp://vector/lookup",
+        "root": "/workspace/index",
+        "kind": "read",
+        "default": "note.md",
+    },
+    "ticket.read": {"uri": "mcp://ticket/read", "root": "/workspace/tickets", "kind": "list"},
+    "ticket.comment": {
+        "uri": "mcp://ticket/comment",
+        "root": "/workspace/tickets",
+        "kind": "write",
+        "default": "ticket.md",
+    },
+    "mail.read": {"uri": "mcp://mail/read", "root": "/workspace/mail", "kind": "list"},
+    "mail.draft": {
+        "uri": "mcp://mail/draft",
+        "root": "/workspace/mail",
+        "kind": "write",
+        "default": "draft.md",
+    },
 }
 TOOLS = {name: spec["uri"] for name, spec in TOOL_SPEC.items()}
 WORKSPACE_PREFIX = "/workspace/documents"
@@ -75,6 +103,22 @@ AGENT_SESSION = {
         ("k8s.observe", 0, {}),
         ("k8s.diagnose", 1, {"path": "/workspace/runbooks/restart.md"}),
         ("k8s.restart", 2, {"path": "/workspace/runbooks/restart.md"}),
+    ),
+    "database-agent": (
+        ("db.query", 0, {}),
+        ("report.generate", 1, {"path": "/workspace/reports/report.md"}),
+    ),
+    "knowledge-agent": (
+        ("search.query", 0, {}),
+        ("vector.lookup", 1, {"path": "/workspace/index/note.md"}),
+    ),
+    "ticket-agent": (
+        ("ticket.read", 0, {}),
+        ("ticket.comment", 1, {"path": "/workspace/tickets/ticket.md"}),
+    ),
+    "mail-agent": (
+        ("mail.read", 0, {}),
+        ("mail.draft", 1, {"path": "/workspace/mail/draft.md"}),
     ),
 }
 
@@ -153,6 +197,10 @@ class LabMcp:
             "workspace/documents/note.md": NOTE_TEXT,
             "workspace/repository/src.py": REPO_TEXT,
             "workspace/runbooks/restart.md": RUNBOOK_TEXT,
+            "workspace/reports/report.md": "lab warehouse report\n",
+            "workspace/index/note.md": "lab index note\n",
+            "workspace/tickets/ticket.md": "lab ticket\n",
+            "workspace/mail/draft.md": "lab draft\n",
         }
         for rel, text in trees.items():
             path = workspace / rel

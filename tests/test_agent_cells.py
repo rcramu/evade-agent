@@ -38,6 +38,8 @@ def test_coding_and_devops_tls_sessions(tmp_path) -> None:
     try:
         run_agent_session(server.url, cert, token, "coding-agent")
         run_agent_session(server.url, cert, token, "devops-agent")
+        run_agent_session(server.url, cert, token, "database-agent")
+        run_agent_session(server.url, cert, token, "mail-agent")
         with pytest.raises(McpError):
             call_tool(server.url, cert, token, "k8s.diagnose", 1, {"path": "/lab/secrets/token"})
     finally:
@@ -45,4 +47,6 @@ def test_coding_and_devops_tls_sessions(tmp_path) -> None:
     text = (tmp_path / "audit.jsonl").read_text(encoding="utf-8")
     assert "mcp://git/read" in text
     assert "mcp://k8s/observe" in text
+    assert "mcp://db/query" in text
+    assert "mcp://mail/read" in text
     assert token not in text
