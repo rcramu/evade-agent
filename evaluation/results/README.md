@@ -15,4 +15,4 @@ Those two objects are deterministic. A later `docker compose` run will rewrite t
 
 Regenerate with `docker compose run --rm --build lab`.
 
-`kernel_pilot.json` is a separate pipeline (`schema: evadeagent-eval-v4-pilot`). It is not a Section 8 source. Falco 0.44.1 captured M1; Tetragon 1.7.0 captured L1/A6; Phase 2 TLS 1.3 MCP and observer are joined. `lab_slo.json` is lab-side operational metrics (`field_executed: false`). `kernel_pilot_agents.json` is the same five cells for `document-assistant`, `coding-agent`, and `devops-agent`.
+`kernel_pilot.json` is a separate pipeline (`schema: evadeagent-eval-v4-pilot`). It is not a Section 8 source. Falco 0.44.1 captured M1; Tetragon 1.7.0 captured L1/A6; Phase 2 TLS 1.3 MCP and observer are joined. `lab_slo.json` is lab-side operational metrics (`field_executed: false`). `kernel_pilot_agents.json` is the same five cells for `document-assistant`, `coding-agent`, and `devops-agent`. Live Tetragon L1/A6 covers all three agents; Falco M1 is the shared `/lab/secrets` capture.

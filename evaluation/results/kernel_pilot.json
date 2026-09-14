@@ -1,7 +1,7 @@
 {
   "schema": "evadeagent-eval-v4-pilot",
   "adapter_schema": "evadeagent-eval-v4",
-  "generated_utc": "2026-09-13T23:51:22.944910+00:00",
+  "generated_utc": "2026-09-14T00:10:46.325184+00:00",
   "products_executed": true,
   "falco_executed": true,
   "tetragon_executed": true,
@@ -146,7 +146,7 @@
     "release": "25.5.0",
     "machine": "arm64",
     "python": "3.14.7",
-    "cpu_seconds": 0.114675,
-    "peak_rss_mib": 29.515625
+    "cpu_seconds": 0.10149699999999999,
+    "peak_rss_mib": 29.53125
   }
 }

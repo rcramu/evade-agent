@@ -12,7 +12,23 @@ from evadeagent.kernel_lab.dumps import write_jsonl
 from evadeagent.kernel_lab.execute import write_executed_dumps
 from evadeagent.kernel_lab.pilot import run_pilot
 
-_LAB_BINARIES = frozenset({"document-assistant", "document-reader", "unrelated-init"})
+_LAB_BINARIES = frozenset(
+    {
+        "document-assistant",
+        "document-reader",
+        "unrelated-init",
+        "coding-agent",
+        "git",
+        "test-runner",
+        "devops-agent",
+        "kubectl",
+    }
+)
+_AGENT_KEEP = {
+    "document-assistant": frozenset({"document-assistant", "document-reader"}),
+    "coding-agent": frozenset({"coding-agent", "git", "test-runner"}),
+    "devops-agent": frozenset({"devops-agent", "kubectl"}),
+}
 
 
 def load_alerts(path: Path) -> list[dict[str, Any]]:
@@ -56,24 +72,41 @@ def _parent(event: dict[str, Any]) -> str:
     return PurePosixPath(str(parent.get("binary") or "")).name
 
 
-def select_tetragon_cell(events: list[dict[str, Any]], cell: str) -> list[dict[str, Any]]:
+def select_tetragon_cell(
+    events: list[dict[str, Any]],
+    cell: str,
+    agent: str = "document-assistant",
+) -> list[dict[str, Any]]:
     """Keep identity binaries for L1 (agent parent) or A6 (unrelated-init parent)."""
+    keep = _AGENT_KEEP[agent]
+    if cell == "A6":
+        children = [
+            event
+            for event in events
+            if _binary(event) in keep and _parent(event) == "unrelated-init"
+        ]
+        parent_ids = {
+            ((event.get("process_exec") or {}).get("parent") or {}).get("exec_id")
+            for event in children
+        }
+        inits = [
+            event
+            for event in events
+            if _binary(event) == "unrelated-init"
+            and ((event.get("process_exec") or {}).get("process") or {}).get("exec_id")
+            in parent_ids
+        ]
+        return inits + children
     kept: list[dict[str, Any]] = []
     for event in events:
         if "process_exec" not in event:
             continue
         name = _binary(event)
         parent = _parent(event)
-        if name not in _LAB_BINARIES:
+        if name == "unrelated-init" or parent == "unrelated-init":
             continue
-        if cell == "L1":
-            if name == "unrelated-init" or parent == "unrelated-init":
-                continue
-            if name in {"document-assistant", "document-reader"}:
-                kept.append(event)
-        elif cell == "A6":
-            if name == "unrelated-init" or parent == "unrelated-init":
-                kept.append(event)
+        if name in keep:
+            kept.append(event)
     return kept
 
 

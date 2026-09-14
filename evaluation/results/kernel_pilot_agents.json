@@ -44,8 +44,8 @@
             "C5": "BLOCK"
           },
           "capture": {
-            "emitted": 11,
-            "seen": 11,
+            "emitted": 8,
+            "seen": 8,
             "missing": [],
             "complete": true
           },
@@ -131,7 +131,7 @@
       },
       "mismatches": [],
       "encoding_disagreements": [],
-      "products_executed": false
+      "products_executed": true
     },
     "coding-agent": {
       "cells": {
@@ -176,8 +176,8 @@
             "C5": "BLOCK"
           },
           "capture": {
-            "emitted": 13,
-            "seen": 13,
+            "emitted": 10,
+            "seen": 10,
             "missing": [],
             "complete": true
           },
@@ -200,8 +200,8 @@
             "C5": "BLOCK"
           },
           "capture": {
-            "emitted": 10,
-            "seen": 10,
+            "emitted": 8,
+            "seen": 8,
             "missing": [],
             "complete": true
           },
@@ -263,7 +263,7 @@
       },
       "mismatches": [],
       "encoding_disagreements": [],
-      "products_executed": false
+      "products_executed": true
     },
     "devops-agent": {
       "cells": {
@@ -308,8 +308,8 @@
             "C5": "BLOCK"
           },
           "capture": {
-            "emitted": 11,
-            "seen": 11,
+            "emitted": 8,
+            "seen": 8,
             "missing": [],
             "complete": true
           },
@@ -395,7 +395,7 @@
       },
       "mismatches": [],
       "encoding_disagreements": [],
-      "products_executed": false
+      "products_executed": true
     }
   },
   "mismatches": [],

@@ -40,8 +40,8 @@ def test_select_tetragon_splits_l1_and_a6() -> None:
     import json
 
     events = [json.loads(line) for line in _TG.read_text(encoding="utf-8").splitlines() if line.strip()]
-    l1 = select_tetragon_cell(events, "L1")
-    a6 = select_tetragon_cell(events, "A6")
+    l1 = select_tetragon_cell(events, "L1", "document-assistant")
+    a6 = select_tetragon_cell(events, "A6", "document-assistant")
     assert {row["process_exec"]["process"]["binary"].rsplit("/", 1)[-1] for row in l1} == {
         "document-assistant",
         "document-reader",
@@ -54,6 +54,44 @@ def test_select_tetragon_splits_l1_and_a6() -> None:
         "document-reader",
     }
     assert any(row["process_exec"]["parent"]["binary"].endswith("unrelated-init") for row in a6)
+
+
+def test_select_tetragon_splits_coding_and_devops() -> None:
+    import json
+
+    events = [json.loads(line) for line in _TG.read_text(encoding="utf-8").splitlines() if line.strip()]
+    coding_l1 = select_tetragon_cell(events, "L1", "coding-agent")
+    coding_a6 = select_tetragon_cell(events, "A6", "coding-agent")
+    devops_l1 = select_tetragon_cell(events, "L1", "devops-agent")
+    devops_a6 = select_tetragon_cell(events, "A6", "devops-agent")
+    assert {row["process_exec"]["process"]["binary"].rsplit("/", 1)[-1] for row in coding_l1} == {
+        "coding-agent",
+        "git",
+        "test-runner",
+    }
+    assert {row["process_exec"]["process"]["binary"].rsplit("/", 1)[-1] for row in coding_a6} == {
+        "unrelated-init",
+        "git",
+    }
+    assert {row["process_exec"]["process"]["binary"].rsplit("/", 1)[-1] for row in devops_l1} == {
+        "devops-agent",
+        "kubectl",
+    }
+    assert {row["process_exec"]["process"]["binary"].rsplit("/", 1)[-1] for row in devops_a6} == {
+        "unrelated-init",
+        "kubectl",
+    }
+    coding_init = next(
+        row["process_exec"]["process"]["exec_id"]
+        for row in coding_a6
+        if row["process_exec"]["process"]["binary"].endswith("unrelated-init")
+    )
+    devops_init = next(
+        row["process_exec"]["process"]["exec_id"]
+        for row in devops_a6
+        if row["process_exec"]["process"]["binary"].endswith("unrelated-init")
+    )
+    assert coding_init != devops_init
 
 
 def test_hybrid_both_products_match_expected(tmp_path) -> None:

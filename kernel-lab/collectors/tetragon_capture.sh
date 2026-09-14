@@ -26,17 +26,15 @@ while [ "$i" -lt 40 ]; do
 done
 
 # Stream first, then spawn lab processes so getevents sees them.
-docker exec "$NAME" timeout 18 tetra getevents -o json >"$OUT/tetragon.raw" 2>"$OUT/tetra.err" &
+docker exec "$NAME" timeout 40 tetra getevents -o json >"$OUT/tetragon.raw" 2>"$OUT/tetra.err" &
 stream=$!
 sleep 2
 
-docker run --rm --network none --name evade-tg-l1 \
-  -v "$WORK:/workloads:ro" \
-  alpine:3.20 /bin/sh /workloads/l1.sh >/dev/null
-
-docker run --rm --network none --name evade-tg-a6 \
-  -v "$WORK:/workloads:ro" \
-  alpine:3.20 /bin/sh /workloads/a6.sh >/dev/null
+for job in l1 a6 coding-l1 coding-a6 devops-l1 devops-a6; do
+  docker run --rm --network none --name "evade-tg-${job}" \
+    -v "$WORK:/workloads:ro" \
+    alpine:3.20 /bin/sh "/workloads/${job}.sh" >/dev/null
+done
 
 wait "$stream" || true
 docker rm -f "$NAME" >/dev/null 2>&1 || true
@@ -45,7 +43,16 @@ python3 - <<'PY' "$OUT/tetragon.raw" "$OUT/tetragon.jsonl"
 import json, sys
 from pathlib import PurePosixPath
 src, dest = sys.argv[1], sys.argv[2]
-keep = {"document-assistant", "document-reader", "unrelated-init"}
+keep = {
+    "document-assistant",
+    "document-reader",
+    "unrelated-init",
+    "coding-agent",
+    "git",
+    "test-runner",
+    "devops-agent",
+    "kubectl",
+}
 out = []
 for line in open(src, encoding="utf-8"):
     line = line.strip()
