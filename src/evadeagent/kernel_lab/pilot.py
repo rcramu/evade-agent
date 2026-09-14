@@ -1,4 +1,4 @@
-"""document-assistant five-cell pilot. Writes evadeagent-eval-v4-pilot JSON.
+"""document-assistant Appendix D pilot. Writes evadeagent-eval-v4-pilot JSON.
 
 Does not overwrite evaluation/results/approach_comparison.json.
 Section 8 encodings stay in approach_comparison.json. Product joins are
@@ -19,6 +19,7 @@ from evadeagent.kernel_lab.agent_cells import (
     ENCODING_KIND,
     EXPECTED,
     PILOT_AGENTS,
+    PILOT_CELLS,
     context_for,
     observations_for,
 )
@@ -27,7 +28,6 @@ from evadeagent.lab import build_trace
 from evadeagent.models import DetectorMode
 from evadeagent.observe import SCHEMA, assemble_trace
 
-PILOT_CELLS = ("L1", "M1", "A6", "A8", "A9")
 MODES = (DetectorMode.B4, DetectorMode.B5, DetectorMode.C5)
 PILOT_SCHEMA = "evadeagent-eval-v4-pilot"
 

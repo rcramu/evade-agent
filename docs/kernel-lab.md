@@ -4,9 +4,9 @@ This note is the layout and adapter contract for work the JSS manuscript does
 **not** claim: product Falco/Tetragon, a lab MCP path, and a later field SLO.
 
 The **kernel-lab pilot** is implemented (`schema: evadeagent-eval-v4-pilot`).
-Falco 0.44.1 captured M1; Tetragon 1.7.0 captured L1/A6. A8/A9 host rows still
-use the executed recorder. It is not part of `schema: evadeagent-eval-v3`.
-Do not copy its cells into Section 8.
+Falco 0.44.1 captured M1, A2/A4 helper-path, and A8/A9 negatives. Tetragon 1.7.0
+captured L1/A6 and A2/A4/A8/A9. A9 ticks are inverted in the join. It is not
+part of `schema: evadeagent-eval-v3`. Do not copy its cells into Section 8.
 
 LLM-generated plans are out of scope here.
 Cisco publication approval is not a gate for this paper.
@@ -95,12 +95,12 @@ Lab-only fields on fixture JSON live under `_lab` (including `seen`).
 runbooks (no cluster). Coding L1 uses the real `git` client when the image
 provides it.
 
-**Products.** Falco 0.44.1 on per-agent M1 plus lab sink-process names.
-Tetragon 1.7.0 on L1/A6. Rules implement manuscript Table C.1 classes.
-A8 is a designed product miss (no `/lab/secrets` open). A9 remains temporal
-on the executed recorder: products do not invert timestamps.
+**Products.** Falco 0.44.1 on per-agent M1, sink names, A2/A4 helper-path,
+and A8/A9 workspace-only negatives. Tetragon 1.7.0 on L1/A6 and A2/A4/A8/A9.
+Rules implement manuscript Table C.1 classes. A8 is a designed product miss
+(no `/lab/secrets` open). A9 temporal inversion is applied in the Tetragon join.
 
-The five cells and expected decisions are locked in `EXPECTED`
+The seven cells and expected decisions are locked in `EXPECTED`
 (`agent_cells.py`) and checked by `tests/test_kernel_pilot.py`.
 
 A product run replaces fixture JSON with collector output, sets

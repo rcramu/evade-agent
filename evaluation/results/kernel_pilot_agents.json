@@ -20,8 +20,8 @@
             "C5": "ALLOW"
           },
           "capture": {
-            "emitted": 8,
-            "seen": 8,
+            "emitted": 24,
+            "seen": 24,
             "missing": [],
             "complete": true
           },
@@ -92,8 +92,8 @@
             "C5": "ALLOW"
           },
           "capture": {
-            "emitted": 12,
-            "seen": 8,
+            "emitted": 28,
+            "seen": 24,
             "missing": [
               "helper-worker",
               "/lab/secrets/token",
@@ -121,8 +121,56 @@
             "C5": "BLOCK"
           },
           "capture": {
-            "emitted": 8,
-            "seen": 8,
+            "emitted": 24,
+            "seen": 24,
+            "missing": [],
+            "complete": true
+          },
+          "expected_capture_complete": true
+        },
+        "A2": {
+          "shape": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "encoding": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "expected": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "capture": {
+            "emitted": 34,
+            "seen": 34,
+            "missing": [],
+            "complete": true
+          },
+          "expected_capture_complete": true
+        },
+        "A4": {
+          "shape": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "encoding": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "expected": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "capture": {
+            "emitted": 34,
+            "seen": 34,
             "missing": [],
             "complete": true
           },
@@ -152,8 +200,8 @@
             "C5": "ALLOW"
           },
           "capture": {
-            "emitted": 14,
-            "seen": 14,
+            "emitted": 46,
+            "seen": 46,
             "missing": [],
             "complete": true
           },
@@ -224,8 +272,8 @@
             "C5": "ALLOW"
           },
           "capture": {
-            "emitted": 14,
-            "seen": 10,
+            "emitted": 50,
+            "seen": 46,
             "missing": [
               "helper-worker",
               "/lab/secrets/token",
@@ -253,8 +301,56 @@
             "C5": "BLOCK"
           },
           "capture": {
-            "emitted": 10,
-            "seen": 10,
+            "emitted": 46,
+            "seen": 46,
+            "missing": [],
+            "complete": true
+          },
+          "expected_capture_complete": true
+        },
+        "A2": {
+          "shape": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "encoding": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "expected": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "capture": {
+            "emitted": 56,
+            "seen": 56,
+            "missing": [],
+            "complete": true
+          },
+          "expected_capture_complete": true
+        },
+        "A4": {
+          "shape": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "encoding": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "expected": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "capture": {
+            "emitted": 56,
+            "seen": 56,
             "missing": [],
             "complete": true
           },
@@ -284,8 +380,8 @@
             "C5": "ALLOW"
           },
           "capture": {
-            "emitted": 8,
-            "seen": 8,
+            "emitted": 24,
+            "seen": 24,
             "missing": [],
             "complete": true
           },
@@ -356,8 +452,8 @@
             "C5": "ALLOW"
           },
           "capture": {
-            "emitted": 12,
-            "seen": 8,
+            "emitted": 28,
+            "seen": 24,
             "missing": [
               "helper-worker",
               "/lab/secrets/token",
@@ -385,8 +481,56 @@
             "C5": "BLOCK"
           },
           "capture": {
-            "emitted": 8,
-            "seen": 8,
+            "emitted": 24,
+            "seen": 24,
+            "missing": [],
+            "complete": true
+          },
+          "expected_capture_complete": true
+        },
+        "A2": {
+          "shape": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "encoding": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "expected": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "capture": {
+            "emitted": 34,
+            "seen": 34,
+            "missing": [],
+            "complete": true
+          },
+          "expected_capture_complete": true
+        },
+        "A4": {
+          "shape": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "encoding": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "expected": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "capture": {
+            "emitted": 34,
+            "seen": 34,
             "missing": [],
             "complete": true
           },
@@ -416,8 +560,8 @@
             "C5": "ALLOW"
           },
           "capture": {
-            "emitted": 8,
-            "seen": 8,
+            "emitted": 24,
+            "seen": 24,
             "missing": [],
             "complete": true
           },
@@ -488,8 +632,8 @@
             "C5": "ALLOW"
           },
           "capture": {
-            "emitted": 12,
-            "seen": 8,
+            "emitted": 28,
+            "seen": 24,
             "missing": [
               "helper-worker",
               "/lab/secrets/token",
@@ -517,8 +661,56 @@
             "C5": "BLOCK"
           },
           "capture": {
-            "emitted": 8,
-            "seen": 8,
+            "emitted": 24,
+            "seen": 24,
+            "missing": [],
+            "complete": true
+          },
+          "expected_capture_complete": true
+        },
+        "A2": {
+          "shape": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "encoding": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "expected": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "capture": {
+            "emitted": 34,
+            "seen": 34,
+            "missing": [],
+            "complete": true
+          },
+          "expected_capture_complete": true
+        },
+        "A4": {
+          "shape": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "encoding": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "expected": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "capture": {
+            "emitted": 34,
+            "seen": 34,
             "missing": [],
             "complete": true
           },
@@ -548,8 +740,8 @@
             "C5": "ALLOW"
           },
           "capture": {
-            "emitted": 8,
-            "seen": 8,
+            "emitted": 24,
+            "seen": 24,
             "missing": [],
             "complete": true
           },
@@ -620,8 +812,8 @@
             "C5": "ALLOW"
           },
           "capture": {
-            "emitted": 12,
-            "seen": 8,
+            "emitted": 28,
+            "seen": 24,
             "missing": [
               "helper-worker",
               "/lab/secrets/token",
@@ -649,8 +841,56 @@
             "C5": "BLOCK"
           },
           "capture": {
-            "emitted": 8,
-            "seen": 8,
+            "emitted": 24,
+            "seen": 24,
+            "missing": [],
+            "complete": true
+          },
+          "expected_capture_complete": true
+        },
+        "A2": {
+          "shape": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "encoding": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "expected": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "capture": {
+            "emitted": 34,
+            "seen": 34,
+            "missing": [],
+            "complete": true
+          },
+          "expected_capture_complete": true
+        },
+        "A4": {
+          "shape": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "encoding": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "expected": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "capture": {
+            "emitted": 34,
+            "seen": 34,
             "missing": [],
             "complete": true
           },
@@ -680,8 +920,8 @@
             "C5": "ALLOW"
           },
           "capture": {
-            "emitted": 8,
-            "seen": 8,
+            "emitted": 24,
+            "seen": 24,
             "missing": [],
             "complete": true
           },
@@ -752,8 +992,8 @@
             "C5": "ALLOW"
           },
           "capture": {
-            "emitted": 12,
-            "seen": 8,
+            "emitted": 28,
+            "seen": 24,
             "missing": [
               "helper-worker",
               "/lab/secrets/token",
@@ -781,8 +1021,56 @@
             "C5": "BLOCK"
           },
           "capture": {
-            "emitted": 8,
-            "seen": 8,
+            "emitted": 24,
+            "seen": 24,
+            "missing": [],
+            "complete": true
+          },
+          "expected_capture_complete": true
+        },
+        "A2": {
+          "shape": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "encoding": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "expected": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "capture": {
+            "emitted": 34,
+            "seen": 34,
+            "missing": [],
+            "complete": true
+          },
+          "expected_capture_complete": true
+        },
+        "A4": {
+          "shape": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "encoding": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "expected": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "capture": {
+            "emitted": 34,
+            "seen": 34,
             "missing": [],
             "complete": true
           },
@@ -812,8 +1100,8 @@
             "C5": "ALLOW"
           },
           "capture": {
-            "emitted": 8,
-            "seen": 8,
+            "emitted": 24,
+            "seen": 24,
             "missing": [],
             "complete": true
           },
@@ -884,8 +1172,8 @@
             "C5": "ALLOW"
           },
           "capture": {
-            "emitted": 12,
-            "seen": 8,
+            "emitted": 28,
+            "seen": 24,
             "missing": [
               "helper-worker",
               "/lab/secrets/token",
@@ -913,8 +1201,56 @@
             "C5": "BLOCK"
           },
           "capture": {
-            "emitted": 8,
-            "seen": 8,
+            "emitted": 24,
+            "seen": 24,
+            "missing": [],
+            "complete": true
+          },
+          "expected_capture_complete": true
+        },
+        "A2": {
+          "shape": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "encoding": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "expected": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "capture": {
+            "emitted": 34,
+            "seen": 34,
+            "missing": [],
+            "complete": true
+          },
+          "expected_capture_complete": true
+        },
+        "A4": {
+          "shape": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "encoding": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "expected": {
+            "B4": "BLOCK",
+            "B5": "BLOCK",
+            "C5": "BLOCK"
+          },
+          "capture": {
+            "emitted": 34,
+            "seen": 34,
             "missing": [],
             "complete": true
           },
@@ -929,47 +1265,47 @@
   "mismatches": [],
   "product_aers": {
     "B4": {
-      "tp": 7,
+      "tp": 21,
       "fp": 0,
       "fn": 21,
       "tn": 7,
-      "f1": 0.4,
+      "f1": 0.67,
       "fnr_static": 0.0,
-      "fnr_adversarial": 1.0,
-      "ers": 0.0,
-      "aers": 0.0,
+      "fnr_adversarial": 0.6,
+      "ers": 0.4,
+      "aers": 0.4,
       "n_static": 7,
-      "n_adversarial": 21,
+      "n_adversarial": 35,
       "n_benign": 7,
       "s_i": 1.0
     },
     "B5": {
-      "tp": 14,
+      "tp": 28,
       "fp": 0,
       "fn": 14,
       "tn": 7,
-      "f1": 0.67,
+      "f1": 0.8,
       "fnr_static": 0.0,
-      "fnr_adversarial": 0.67,
-      "ers": 0.33,
-      "aers": 0.33,
+      "fnr_adversarial": 0.4,
+      "ers": 0.6,
+      "aers": 0.6,
       "n_static": 7,
-      "n_adversarial": 21,
+      "n_adversarial": 35,
       "n_benign": 7,
       "s_i": 1.0
     },
     "C5": {
-      "tp": 21,
+      "tp": 35,
       "fp": 0,
       "fn": 7,
       "tn": 7,
-      "f1": 0.86,
+      "f1": 0.91,
       "fnr_static": 0.0,
-      "fnr_adversarial": 0.33,
-      "ers": 0.67,
-      "aers": 0.67,
+      "fnr_adversarial": 0.2,
+      "ers": 0.8,
+      "aers": 0.8,
       "n_static": 7,
-      "n_adversarial": 21,
+      "n_adversarial": 35,
       "n_benign": 7,
       "s_i": 1.0
     }
@@ -977,5 +1313,9 @@
   "sink_process_alerts": 2,
   "a8_product_path_alerts": 0,
   "a8_product_alerts": 0,
-  "note": "Do not copy these cells into manuscript Section 8. product_aers is the five-cell join (7 agents \u00d7 L1/M1/A6/A8/A9), not Table 10."
+  "a2_product_path_alerts": 1,
+  "a4_product_path_alerts": 1,
+  "a9_product_path_alerts": 0,
+  "tetragon_extra_process_exec": 82,
+  "note": "Do not copy these cells into manuscript Section 8. product_aers is the Appendix D join (7 agents \u00d7 L1/M1/A2/A4/A6/A8/A9), not Table 10."
 }

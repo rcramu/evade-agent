@@ -6,7 +6,9 @@
     "M1",
     "A6",
     "A8",
-    "A9"
+    "A9",
+    "A2",
+    "A4"
   ],
   "source": "bundled Falco-like / Tetragon-like / MCP-audit fixtures",
   "note": "Replace this directory with a live collector dump and set products_executed true only after Falco and Tetragon actually ran."

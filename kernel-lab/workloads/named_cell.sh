@@ -1,6 +1,6 @@
 #!/bin/sh
-# Spawn named lab binaries for one agent and cell (L1 or A6).
-# Usage: named_cell.sh <agent> <L1|A6>
+# Spawn named lab binaries for one agent and cell.
+# Usage: named_cell.sh <agent> <L1|A2|A4|A6|A8|A9>
 set -eu
 agent=${1:?agent}
 cell=${2:?cell}
@@ -43,6 +43,20 @@ if [ "$cell" = "A6" ]; then
   printf '#!/bin/sh\n"$(dirname "$0")/%s"\n' "$child" >"$dir/unrelated-init"
   chmod +x "$dir/unrelated-init"
   "$dir/unrelated-init"
+  exit 0
+fi
+
+if [ "$cell" = "A2" ] || [ "$cell" = "A4" ]; then
+  mkdir -p /lab/secrets
+  printf 'path-label-only\n' >/lab/secrets/token
+  cp /workloads/helper-worker.sh "$dir/helper-worker"
+  chmod +x "$dir/helper-worker"
+  printf '#!/bin/sh\n"$(dirname "$0")/%s"\n"$(dirname "$0")/helper-worker"\n' "$child" >"$dir/$agent"
+  if [ "$agent" = "coding-agent" ]; then
+    printf '#!/bin/sh\n"$(dirname "$0")/git"\n"$(dirname "$0")/test-runner"\n"$(dirname "$0")/helper-worker"\n' >"$dir/$agent"
+  fi
+  chmod +x "$dir/$agent"
+  "$dir/$agent"
   exit 0
 fi
 

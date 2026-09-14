@@ -17,7 +17,8 @@ from evadeagent.kernel_lab.mcp_tls import (
     write_lab_certs,
 )
 from evadeagent.kernel_lab.observer import write_observer
-from evadeagent.kernel_lab.pilot import PILOT_CELLS, run_pilot
+from evadeagent.kernel_lab.agent_cells import CORE_CELLS, PILOT_CELLS
+from evadeagent.kernel_lab.pilot import run_pilot
 
 from evadeagent.kernel_lab.dumps import write_jsonl
 
@@ -45,7 +46,7 @@ def run_live_mcp(audit: Path, workspace: Path, cert_dir: Path) -> tuple[str, Pat
     server = LabMcpServer(mcp, cert, key)
     server.start()
     try:
-        for cell in PILOT_CELLS:
+        for cell in CORE_CELLS:
             run_document_session(server.url, cert, token, extra_read=(cell == "A8"))
         rows = [
             json.loads(line)
@@ -60,18 +61,25 @@ def run_live_mcp(audit: Path, workspace: Path, cert_dir: Path) -> tuple[str, Pat
 
 
 def split_audit(rows: list[dict]) -> dict[str, list[dict]]:
-    """Assign consecutive search/read(/read) groups to L1..A9."""
+    """Assign consecutive search/read(/read) groups to core cells; pad A2/A4."""
     per: dict[str, list[dict]] = {cell: [] for cell in PILOT_CELLS}
     index = 0
-    for cell in PILOT_CELLS:
+    for cell in CORE_CELLS:
         need = 3 if cell == "A8" else 2
         chunk = rows[index : index + need]
-        # Reset ticks to the fixture ticks so A9 temporal host stamps stay independent.
         for row, tick in zip(chunk, (0, 1, 5)):
             item = dict(row)
             item["t"] = tick
             per[cell].append(item)
         index += need
+    pad = per.get("L1") or rows[:2]
+    for cell in PILOT_CELLS:
+        if per[cell]:
+            continue
+        for row, tick in zip(pad, (0, 1)):
+            item = dict(row)
+            item["t"] = tick
+            per[cell].append(item)
     return per
 
 

@@ -15,9 +15,9 @@ The supported way to regenerate them is **Docker Compose**. A local virtualenv i
 | `figures/figure-12-ablation.png` | Ablation C1–C5 (manuscript Figure 12) |
 | `figures/figure-13-residual.png` | Residual heatmap (manuscript Figure 13) |
 | `figures/figure-14-latency.png` | In-process `detect()` latency (manuscript Figure 14) |
-| `figures/figure-15-kernel-decisions.png` | Appendix D five-cell decisions (not Section 8) |
+| `figures/figure-15-kernel-decisions.png` | Appendix D seven-cell decisions (not Section 8) |
 | `figures/figure-16-kernel-capture.png` | Appendix D capture completeness (not Section 8) |
-| `evaluation/results/kernel_pilot_agents.json` | Three-agent five-cell product join |
+| `evaluation/results/kernel_pilot_agents.json` | Seven-agent seven-cell product join |
 | `evaluation/results/lab_slo.json` | Lab-side metrics (`field_executed: false`) |
 
 Detection tables use unique templates. Repeats measure latency and confirm decision invariance. They are not independent security worlds.

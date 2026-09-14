@@ -17,6 +17,8 @@ def test_split_audit_assigns_a8_extra_read() -> None:
     assert len(per["L1"]) == 2
     assert len(per["A8"]) == 3
     assert per["A8"][-1]["t"] == 5
+    assert len(per["A2"]) == 2
+    assert len(per["A4"]) == 2
 
 
 def test_phase2_pilot_matches_expected(tmp_path: Path) -> None:

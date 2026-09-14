@@ -83,7 +83,7 @@ def main() -> int:
     if payload["encoding_disagreements"]:
         print("encoding disagreements:", payload["encoding_disagreements"])
     else:
-        print("shape vs encoding decisions agreed on all five cells")
+        print("shape vs encoding decisions agreed on all Appendix D cells")
     return 0
 
 

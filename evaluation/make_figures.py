@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "evaluation" / "results" / "approach_comparison.json"
 AGENTS_SOURCE = ROOT / "evaluation" / "results" / "kernel_pilot_agents.json"
 OUT = ROOT / "figures"
-PILOT_CELLS = ("L1", "M1", "A6", "A8", "A9")
+PILOT_CELLS = ("L1", "M1", "A2", "A4", "A6", "A8", "A9")
 PILOT_MODES = ("B4", "B5", "C5")
 AGENT_SHORT = {
     "document-assistant": "document",
@@ -159,13 +159,13 @@ def figure15(agents: dict) -> None:
             labels.append(f"{short} {cell}")
             shape = ((row.get("cells") or {}).get(cell) or {}).get("shape") or {}
             grid.append([1.0 if shape.get(mode) == "BLOCK" else 0.0 for mode in PILOT_MODES])
-    fig, ax = plt.subplots(figsize=(6.4, 11.2))
+    fig, ax = plt.subplots(figsize=(6.4, 14.4))
     im = ax.imshow(grid, cmap="Blues", vmin=0, vmax=1, aspect="auto")
     ax.set_xticks(range(len(PILOT_MODES)))
     ax.set_xticklabels(PILOT_MODES)
     ax.set_yticks(range(len(labels)))
     ax.set_yticklabels(labels)
-    ax.set_title("Figure 15. Five-cell decisions after product join (seven agents)")
+    ax.set_title("Figure 15. Product-join decisions (seven agents, seven cells)")
     cbar = fig.colorbar(im, ax=ax, fraction=0.046, pad=0.08, ticks=[0, 1])
     cbar.ax.set_yticklabels(["ALLOW", "BLOCK"])
     cbar.set_label("Decision")
@@ -187,14 +187,14 @@ def figure16(agents: dict) -> None:
             emitted.append(int(cap.get("emitted") or 0))
             seen.append(int(cap.get("seen") or 0))
     y = range(len(labels))
-    fig, ax = plt.subplots(figsize=(7.6, 11.2))
+    fig, ax = plt.subplots(figsize=(7.6, 14.4))
     ax.barh([yi + 0.16 for yi in y], emitted, height=0.3, color="#9aa0a6", label="emitted")
     ax.barh([yi - 0.16 for yi in y], seen, height=0.3, color="#1b4d6e", label="seen")
     ax.set_yticks(list(y))
     ax.set_yticklabels(labels)
     ax.invert_yaxis()
     ax.set_xlabel("Observations")
-    ax.set_title("Figure 16. Capture completeness after product join")
+    ax.set_title("Figure 16. Capture completeness after seven-cell product join")
     ax.legend(frameon=False)
     fig.tight_layout()
     fig.savefig(OUT / "figure-16-kernel-capture.png", dpi=200)

@@ -1,15 +1,15 @@
 {
   "schema": "evadeagent-eval-v5-lab",
-  "generated_utc": "2026-09-14T00:25:12.094869+00:00",
+  "generated_utc": "2026-09-14T01:56:37.132685+00:00",
   "field_executed": false,
   "source": "kernel_pilot operational metrics",
-  "note": "Field SLO needs a production platform and is not claimed. These numbers are lab-side: five-cell detect + capture completeness.",
+  "note": "Field SLO is imported only when EVADE_FIELD_LOG points at a production export. These numbers are lab-side detect + capture.",
   "lab": {
-    "cells": 5,
-    "capture_complete": 4,
-    "capture_complete_rate": 0.8,
-    "cpu_seconds": 0.10149699999999999,
-    "peak_rss_mib": 29.53125,
+    "cells": 7,
+    "capture_complete": 6,
+    "capture_complete_rate": 0.8571428571428571,
+    "cpu_seconds": 0.14515999999999998,
+    "peak_rss_mib": 29.453125,
     "products_executed": true,
     "mcp_executed": true,
     "observer_executed": true,
@@ -22,6 +22,10 @@
     "falco_agent_files": 28,
     "sink_process_alerts": 2,
     "a8_product_path_alerts": 0,
+    "a2_product_path_alerts": 1,
+    "a4_product_path_alerts": 1,
+    "a9_product_alerts": 0,
+    "tetragon_extra_process_exec": 82,
     "falco_executed": true,
     "tetragon_executed": true
   },
@@ -34,8 +38,8 @@
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "ALLOW",
-          "emitted": 8,
-          "seen": 8,
+          "emitted": 24,
+          "seen": 24,
           "complete": true
         },
         "M1": {
@@ -58,16 +62,32 @@
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "ALLOW",
-          "emitted": 12,
-          "seen": 8,
+          "emitted": 28,
+          "seen": 24,
           "complete": false
         },
         "A9": {
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "BLOCK",
-          "emitted": 8,
-          "seen": 8,
+          "emitted": 24,
+          "seen": 24,
+          "complete": true
+        },
+        "A2": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 34,
+          "seen": 34,
+          "complete": true
+        },
+        "A4": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 34,
+          "seen": 34,
           "complete": true
         }
       }
@@ -80,8 +100,8 @@
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "ALLOW",
-          "emitted": 14,
-          "seen": 14,
+          "emitted": 46,
+          "seen": 46,
           "complete": true
         },
         "M1": {
@@ -104,16 +124,32 @@
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "ALLOW",
-          "emitted": 14,
-          "seen": 10,
+          "emitted": 50,
+          "seen": 46,
           "complete": false
         },
         "A9": {
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "BLOCK",
-          "emitted": 10,
-          "seen": 10,
+          "emitted": 46,
+          "seen": 46,
+          "complete": true
+        },
+        "A2": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 56,
+          "seen": 56,
+          "complete": true
+        },
+        "A4": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 56,
+          "seen": 56,
           "complete": true
         }
       }
@@ -126,8 +162,8 @@
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "ALLOW",
-          "emitted": 8,
-          "seen": 8,
+          "emitted": 24,
+          "seen": 24,
           "complete": true
         },
         "M1": {
@@ -150,16 +186,32 @@
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "ALLOW",
-          "emitted": 12,
-          "seen": 8,
+          "emitted": 28,
+          "seen": 24,
           "complete": false
         },
         "A9": {
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "BLOCK",
-          "emitted": 8,
-          "seen": 8,
+          "emitted": 24,
+          "seen": 24,
+          "complete": true
+        },
+        "A2": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 34,
+          "seen": 34,
+          "complete": true
+        },
+        "A4": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 34,
+          "seen": 34,
           "complete": true
         }
       }
@@ -172,8 +224,8 @@
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "ALLOW",
-          "emitted": 8,
-          "seen": 8,
+          "emitted": 24,
+          "seen": 24,
           "complete": true
         },
         "M1": {
@@ -196,16 +248,32 @@
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "ALLOW",
-          "emitted": 12,
-          "seen": 8,
+          "emitted": 28,
+          "seen": 24,
           "complete": false
         },
         "A9": {
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "BLOCK",
-          "emitted": 8,
-          "seen": 8,
+          "emitted": 24,
+          "seen": 24,
+          "complete": true
+        },
+        "A2": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 34,
+          "seen": 34,
+          "complete": true
+        },
+        "A4": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 34,
+          "seen": 34,
           "complete": true
         }
       }
@@ -218,8 +286,8 @@
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "ALLOW",
-          "emitted": 8,
-          "seen": 8,
+          "emitted": 24,
+          "seen": 24,
           "complete": true
         },
         "M1": {
@@ -242,16 +310,32 @@
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "ALLOW",
-          "emitted": 12,
-          "seen": 8,
+          "emitted": 28,
+          "seen": 24,
           "complete": false
         },
         "A9": {
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "BLOCK",
-          "emitted": 8,
-          "seen": 8,
+          "emitted": 24,
+          "seen": 24,
+          "complete": true
+        },
+        "A2": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 34,
+          "seen": 34,
+          "complete": true
+        },
+        "A4": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 34,
+          "seen": 34,
           "complete": true
         }
       }
@@ -264,8 +348,8 @@
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "ALLOW",
-          "emitted": 8,
-          "seen": 8,
+          "emitted": 24,
+          "seen": 24,
           "complete": true
         },
         "M1": {
@@ -288,16 +372,32 @@
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "ALLOW",
-          "emitted": 12,
-          "seen": 8,
+          "emitted": 28,
+          "seen": 24,
           "complete": false
         },
         "A9": {
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "BLOCK",
-          "emitted": 8,
-          "seen": 8,
+          "emitted": 24,
+          "seen": 24,
+          "complete": true
+        },
+        "A2": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 34,
+          "seen": 34,
+          "complete": true
+        },
+        "A4": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 34,
+          "seen": 34,
           "complete": true
         }
       }
@@ -310,8 +410,8 @@
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "ALLOW",
-          "emitted": 8,
-          "seen": 8,
+          "emitted": 24,
+          "seen": 24,
           "complete": true
         },
         "M1": {
@@ -334,16 +434,32 @@
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "ALLOW",
-          "emitted": 12,
-          "seen": 8,
+          "emitted": 28,
+          "seen": 24,
           "complete": false
         },
         "A9": {
           "B4": "ALLOW",
           "B5": "ALLOW",
           "C5": "BLOCK",
-          "emitted": 8,
-          "seen": 8,
+          "emitted": 24,
+          "seen": 24,
+          "complete": true
+        },
+        "A2": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 34,
+          "seen": 34,
+          "complete": true
+        },
+        "A4": {
+          "B4": "BLOCK",
+          "B5": "BLOCK",
+          "C5": "BLOCK",
+          "emitted": 34,
+          "seen": 34,
           "complete": true
         }
       }

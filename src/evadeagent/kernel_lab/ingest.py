@@ -35,6 +35,7 @@ _LAB_BINARIES = frozenset(
         "paste-host",
     }
 )
+_HELPER = "helper-worker"
 _AGENT_KEEP = {
     "document-assistant": frozenset({"document-assistant", "document-reader"}),
     "coding-agent": frozenset({"coding-agent", "git", "test-runner"}),
@@ -87,13 +88,58 @@ def _parent(event: dict[str, Any]) -> str:
     return PurePosixPath(str(parent.get("binary") or "")).name
 
 
+def select_path_alerts(alerts: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Keep EVADE Lab Sensitive Path rows (A2/A4 product path class)."""
+    kept: list[dict[str, Any]] = []
+    for row in alerts:
+        if row.get("rule") != "EVADE Lab Sensitive Path":
+            continue
+        fields = dict(row.get("output_fields") or {})
+        lab: dict[str, Any] = {"t": _tick(fields.get("evt.time")), "seen": True}
+        if fields.get("proc.name") == _HELPER:
+            lab["flags"] = ["credential"]
+            lab["endpoint"] = "collector-cdn.example"
+        kept.append({"output_fields": fields, "_lab": lab, "rule": row.get("rule")})
+    return kept
+
+
+def select_sink_alerts(alerts: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Keep Table C.1 sink process-name alerts. No sockets."""
+    kept: list[dict[str, Any]] = []
+    for row in alerts:
+        if row.get("rule") != "EVADE Lab Sink Process":
+            continue
+        fields = dict(row.get("output_fields") or {})
+        kept.append(
+            {
+                "output_fields": fields,
+                "_lab": {"t": _tick(fields.get("evt.time")), "seen": True},
+                "rule": row.get("rule"),
+            }
+        )
+    return kept
+
+
+def invert_tetragon_ticks(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """A9: products observe legitimate entities; ticks are inverted in the join."""
+    n = len(events)
+    out: list[dict[str, Any]] = []
+    for i, event in enumerate(events):
+        row = dict(event)
+        lab = dict(row.get("_lab") or {})
+        lab["t"] = n - 1 - i
+        row["_lab"] = lab
+        out.append(row)
+    return out
+
+
 def select_tetragon_cell(
     events: list[dict[str, Any]],
     cell: str,
     agent: str = "document-assistant",
 ) -> list[dict[str, Any]]:
-    """Keep identity binaries for L1 (agent parent) or A6 (unrelated-init parent)."""
-    keep = _AGENT_KEEP[agent]
+    """Keep identity binaries for L1/A8/A9, helper-worker for A2/A4, or A6 parent."""
+    keep = set(_AGENT_KEEP[agent])
     if cell == "A6":
         children = [
             event
@@ -122,6 +168,13 @@ def select_tetragon_cell(
             continue
         if name in keep:
             kept.append(event)
+    if cell in {"A2", "A4"}:
+        helpers = [
+            event
+            for event in events
+            if _binary(event) == _HELPER and _parent(event) == agent
+        ]
+        return kept + helpers
     return kept
 
 
@@ -159,7 +212,7 @@ def write_hybrid_dumps(
                 ),
                 "note": (
                     "Falco captured M1. Tetragon captured L1 agent-parent and A6 "
-                    "unrelated-init parent. A8/A9 host rows stay on the executed recorder."
+                    "unrelated-init parent. A2/A4/A8/A9 extra captures join when present."
                 ),
             }
         )

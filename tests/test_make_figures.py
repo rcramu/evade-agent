@@ -44,5 +44,10 @@ def test_lab_slo_has_three_agents_and_no_field() -> None:
     assert slo["lab"]["agent_count"] == len(PILOT_AGENTS)
     assert slo["lab"]["agent_mismatches"] == []
     assert slo["lab"]["tetragon_process_exec"] >= 13
+    assert slo["lab"]["tetragon_extra_process_exec"] >= 14
     assert slo["lab"]["falco_alerts"] >= 4
+    assert slo["lab"]["a2_product_path_alerts"] >= 1
+    assert slo["lab"]["a4_product_path_alerts"] >= 1
+    assert slo["lab"]["a8_product_path_alerts"] == 0
+    assert slo["lab"]["a9_product_alerts"] == 0
     assert set(slo["agents"]) == set(PILOT_AGENTS)
